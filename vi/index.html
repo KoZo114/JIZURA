@@ -532,31 +532,31 @@ button.small.primary { padding: 4px 12px; }
           <button id="btnTap" title="Nhấn vào đầu mỗi dòng trong khi bài hát đang phát">Đặt điểm chuyển cảnh</button>
         </div>
         <div id="whisperBox" class="whisper-box">
-          <div class="sec-h"><h3 class="whisper-title">AI文字起こし</h3><span id="whisperDevice" class="muted mono"></span></div>
+          <div class="sec-h"><h3 class="whisper-title">Chép lời bằng AI</h3><span id="whisperDevice" class="muted mono"></span></div>
           <div class="whisper-fields">
-            <label class="field">言語
-              <select id="whisperLang"><option value="auto">Tự động</option><option value="japanese">日本語</option><option value="english">英語</option></select>
+            <label class="field">Ngôn ngữ
+              <select id="whisperLang"><option value="auto">Tự nhận diện</option><option value="japanese">Tiếng Nhật</option><option value="english">Tiếng Anh</option></select>
             </label>
-            <label class="field">モデル
-              <select id="whisperModel"><option value="base">Cao精度 Base（推奨）</option><option value="tiny">Cao速 Tiny</option></select>
+            <label class="field">Mô hình
+              <select id="whisperModel"><option value="base">Base chính xác (khuyên dùng)</option><option value="tiny">Tiny nhanh</option></select>
             </label>
           </div>
           <div class="whisper-actions">
-            <button id="btnWhisper" class="accent">AIでLời bài hátを文字起こし</button>
+            <button id="btnWhisper" class="accent">Chép lời bài hát bằng AI</button>
           </div>
-          <p id="whisperFirstNote" class="whisper-note muted">原曲を直接解析し、歌声を拾いやすい音量と帯域へTự động調整します。Cao精度 BaseはTinyより時間とメモリを使います。</p>
-          <p class="whisper-note muted">初回のみ選択したAIモデルを読み込みます。ダウンロード後はブラウザにキャッシュされます。</p>
+          <p id="whisperFirstNote" class="whisper-note muted">Bản nhạc gốc được phân tích trực tiếp và tự động điều chỉnh âm lượng, dải tần để dễ bắt giọng hát. Base chính xác tốn nhiều thời gian và bộ nhớ hơn Tiny.</p>
+          <p class="whisper-note muted">Mô hình AI đã chọn chỉ được tải ở lần đầu, sau đó được lưu vào bộ nhớ đệm của trình duyệt.</p>
           <div id="whisperProgressBox" class="whisper-progress" hidden>
-            <div class="progress" role="progressbar" aria-label="AI文字起こしの進行状況" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="whisperBar"></i></div>
-            <div class="whisper-status-row"><span id="whisperStatus" role="status" aria-live="polite">準備中</span><span id="whisperPercent" class="mono">0%</span></div>
+            <div class="progress" role="progressbar" aria-label="Tiến độ chép lời bằng AI" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="whisperBar"></i></div>
+            <div class="whisper-status-row"><span id="whisperStatus" role="status" aria-live="polite">Đang chuẩn bị</span><span id="whisperPercent" class="mono">0%</span></div>
           </div>
           <div id="whisperResult" class="whisper-result" hidden>
-            <label class="field">文字起こし結果（反映前に修正できます）
-              <textarea id="whisperPreview" rows="7" spellcheck="false" aria-label="AI文字起こし結果"></textarea>
+            <label class="field">Kết quả chép lời (có thể sửa trước khi áp dụng)
+              <textarea id="whisperPreview" rows="7" spellcheck="false" aria-label="Kết quả chép lời bằng AI"></textarea>
             </label>
-            <button id="btnApplyWhisper" class="primary">Lời bài hát欄に反映</button>
+            <button id="btnApplyWhisper" class="primary">Áp dụng vào lời bài hát</button>
           </div>
-          <p class="whisper-privacy">文字起こしと音声調整はブラウザ内で処理されます。音声ファイルは文字起こしAPIへ送信されません。</p>
+          <p class="whisper-privacy">Việc chép lời và điều chỉnh âm thanh được xử lý trong trình duyệt. Tệp âm thanh không được gửi tới API chép lời nào.</p>
         </div>
         <div class="fields pro-only">
           <label class="field">BPM<input id="bpm" type="number" min="0" max="300" step="0.1" placeholder="Tự động"></label>
@@ -784,7 +784,7 @@ button.small.primary { padding: 4px 12px; }
     <p><a href="https://github.com/852wa/JIZURA" target="_blank" rel="noopener">https://github.com/852wa/JIZURA</a></p>
     <p class="muted terms-note">Lời bài hát và âm thanh đã tải lên chỉ được xử lý trong trình duyệt này và không được gửi đến máy chủ.</p>
     <details class="terms-oss"><summary>Phần mềm nguồn mở</summary>
-      <p>Xuất MP4:mp4-muxer（MIT License）<br>AI文字起こし：Transformers.js / Whisper Tiny・Base（Apache License 2.0）<br>Phông chữ:Google Fonts phông chữ phân phối（SIL Open Font License 1.1）</p>
+      <p>Xuất MP4:mp4-muxer（MIT License）<br>Chép lời bằng AI: Transformers.js / Whisper Tiny và Base (Apache License 2.0)<br>Phông chữ:Google Fonts phông chữ phân phối（SIL Open Font License 1.1）</p>
     </details>
     <div class="terms-foot"><span class="muted mono">© 2026 hakoniwa · MIT</span><button value="close" class="primary" autofocus>Đóng</button></div>
   </form>
@@ -36913,28 +36913,28 @@ function whisperDevice(device) {
 function onWhisperProgress(info) {
   if (!info) return;
   whisperDevice(info.device);
-  if (info.phase === 'library') whisperProgress('AI機能をChuẩn bị…', 0, true);
-  else if (info.phase === 'model-loading') whisperProgress(`モデル準備中（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）…`, 0, true);
-  else if (info.phase === 'model-download') whisperProgress('モデルダウンロード中…', 0, true);
-  else if (info.phase === 'model-progress') { WT.hasTotal = true; whisperProgress(`モデルダウンロード中 ${Math.round(info.progress)}%`, info.progress, false); }
-  else if (info.phase === 'model-file-progress' && !WT.hasTotal) whisperProgress(`モデルダウンロード中 ${Math.round(info.progress)}%`, info.progress, false);
-  else if (info.phase === 'webgpu-unavailable') whisperProgress('WebGPU非対応のためWASMで実dòngします。', 0, true);
-  else if (info.phase === 'webgpu-fallback') whisperProgress('WebGPUを利用できなかったためWASMへ切り替えます。', 0, true);
-  else if (info.phase === 'model-ready') whisperProgress(`モデル準備完了（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）`, 100, false);
-  else if (info.phase === 'audio-preparing') whisperProgress('音声解析中（歌声を拾いやすく調整·16kHzモノラル化）…', 0, true);
-  else if (info.phase === 'transcribing') whisperProgress('Chữ起こし中…', 0, true);
-  else if (info.phase === 'complete') whisperProgress('Chữ起こし完了', 100, false);
+  if (info.phase === 'library') whisperProgress('Đang chuẩn bị tính năng AI…', 0, true);
+  else if (info.phase === 'model-loading') whisperProgress(`Đang chuẩn bị mô hình (${info.device === 'webgpu' ? 'WebGPU' : 'WASM'})…`, 0, true);
+  else if (info.phase === 'model-download') whisperProgress('Đang tải mô hình…', 0, true);
+  else if (info.phase === 'model-progress') { WT.hasTotal = true; whisperProgress(`Đang tải mô hình ${Math.round(info.progress)}%`, info.progress, false); }
+  else if (info.phase === 'model-file-progress' && !WT.hasTotal) whisperProgress(`Đang tải mô hình ${Math.round(info.progress)}%`, info.progress, false);
+  else if (info.phase === 'webgpu-unavailable') whisperProgress('Không hỗ trợ WebGPU nên sẽ chạy bằng WASM.', 0, true);
+  else if (info.phase === 'webgpu-fallback') whisperProgress('Không dùng được WebGPU nên chuyển sang WASM.', 0, true);
+  else if (info.phase === 'model-ready') whisperProgress(`Mô hình đã sẵn sàng (${info.device === 'webgpu' ? 'WebGPU' : 'WASM'})`, 100, false);
+  else if (info.phase === 'audio-preparing') whisperProgress('Đang phân tích âm thanh (điều chỉnh để dễ bắt giọng hát, chuyển sang mono 16 kHz)…', 0, true);
+  else if (info.phase === 'transcribing') whisperProgress('Đang chép lời…', 0, true);
+  else if (info.phase === 'complete') whisperProgress('Đã chép lời xong', 100, false);
 }
 function whisperErrorText(err) {
   const detail = String((err && err.cause && (err.cause.message || err.cause)) || (err && err.message) || '');
-  if (typeof navigator !== 'undefined' && navigator.onLine === false) return 'ネットワークに接続されておらず、AIモデルのキャッシュも見つかりません。初回はネットワーク接続が必要です。';
-  if (/out of memory|memory|allocation|oom|device lost/i.test(detail)) return 'メモリが不足しました。他のタブを閉じるか、短い音声で試してください。';
-  if (/failed to fetch|network|load failed|fetch/i.test(detail)) return 'AIモデルをダウンロードできませんでした。ネットワーク接続を確認してください。';
-  if (err && err.code === 'NO_AUDIO') return '先に曲を読み込んでください。';
-  if (err && err.code === 'AUDIO_UNSUPPORTED') return 'この音声形式を解析できませんでした。MP3·WAV·M4Aなどで試してください。';
-  if (err && err.code === 'MODEL_LOAD_FAILED') return 'AIモデルを読み込めませんでした。ページを再読み込みして、もう一度試してください。';
-  if (err && err.code === 'EMPTY_RESULT') return '歌詞を認識できませんでした。音量や音声ファイルを確認してください。';
-  return 'Chữ起こしに失敗しました。音声やブラウザのメモリを確認して、もう一度試してください。';
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return 'Không có kết nối mạng và không tìm thấy bộ nhớ đệm của mô hình AI. Lần đầu sử dụng cần kết nối mạng.';
+  if (/out of memory|memory|allocation|oom|device lost/i.test(detail)) return 'Không đủ bộ nhớ. Hãy đóng các thẻ khác hoặc thử với đoạn âm thanh ngắn hơn.';
+  if (/failed to fetch|network|load failed|fetch/i.test(detail)) return 'Không thể tải mô hình AI. Hãy kiểm tra kết nối mạng.';
+  if (err && err.code === 'NO_AUDIO') return 'Hãy tải bài hát trước.';
+  if (err && err.code === 'AUDIO_UNSUPPORTED') return 'Không thể phân tích định dạng âm thanh này. Hãy thử MP3, WAV hoặc M4A.';
+  if (err && err.code === 'MODEL_LOAD_FAILED') return 'Không thể nạp mô hình AI. Hãy tải lại trang rồi thử lại.';
+  if (err && err.code === 'EMPTY_RESULT') return 'Không nhận diện được lời bài hát. Hãy kiểm tra âm lượng và tệp âm thanh.';
+  return 'Chép lời thất bại. Hãy kiểm tra âm thanh và bộ nhớ trình duyệt rồi thử lại.';
 }
 function applyWhisperLyrics(value) {
   const lyrics = String(value || '').trim(); if (!lyrics) return false;
@@ -36944,7 +36944,7 @@ function applyWhisperLyrics(value) {
   pause(); P.lyrics = lyrics; P.timing.lineTimes = {}; P.overrides = {}; P.exportRange = null;
   $('lyrics').value = lyrics; fontKey = '';
   replan(); flushSave(); updateEditBtns(); seek(0);
-  toast('AIChữ起こし結果を歌詞欄に反映しました（あとから修正できます）');
+  toast('Đã áp dụng kết quả chép lời bằng AI vào lời bài hát (có thể sửa sau)');
   return true;
 }
 function setAIBusy(busy) {
@@ -36963,12 +36963,12 @@ async function transcribeWhisperAudio(audioBuffer) {
   });
   $('whisperPreview').value = out.lrc;
   $('whisperResult').hidden = false; $('btnApplyWhisper').disabled = false;
-  whisperDevice(out.device); whisperProgress('Chữ起こし完了。内容を確認して歌詞欄へ反映してください。', 100, false);
+  whisperDevice(out.device); whisperProgress('Đã chép lời xong. Hãy xem lại rồi áp dụng vào lời bài hát.', 100, false);
 }
 async function runWhisper() {
   if (WT.busy) return;
-  if (!S.audio || !S.audio.buffer) { whisperProgress('先に曲を読み込んでください。', 0, false); toast('先に曲を読み込んでください'); return; }
-  setAIBusy(true); pause(); whisperProgress('選択したAIモデルをChuẩn bị…（初回のみダウンロードします）', 0, true);
+  if (!S.audio || !S.audio.buffer) { whisperProgress('Hãy tải bài hát trước.', 0, false); toast('Hãy tải bài hát trước'); return; }
+  setAIBusy(true); pause(); whisperProgress('Đang chuẩn bị mô hình AI đã chọn… (chỉ tải ở lần đầu)', 0, true);
   await new Promise(resolve => requestAnimationFrame(resolve));
   try { await transcribeWhisperAudio(S.audio.buffer); }
   catch (err) { console.error('[JIZURA Whisper] transcription failed', err, err && err.cause); whisperProgress(whisperErrorText(err), 0, false); }
@@ -36979,9 +36979,9 @@ function bindWhisper() {
   run.addEventListener('click', runWhisper);
   apply.addEventListener('click', () => {
     const value = $('whisperPreview').value;
-    if (!value.trim()) { whisperProgress('反映できるChữ起こし結果がありません。', 0, false); return; }
-    if (S.project.lyrics.trim() && !window.confirm('現在の歌詞をAIChữ起こし結果で置き換えますか？\n元に戻すボタンまたは Ctrl+Z で取り消せます。')) return;
-    if (applyWhisperLyrics(value)) whisperProgress('歌詞欄に反映しました。必要に応じて歌詞を修正してください。', 100, false);
+    if (!value.trim()) { whisperProgress('Không có kết quả chép lời để áp dụng.', 0, false); return; }
+    if (S.project.lyrics.trim() && !window.confirm('Thay lời hiện tại bằng kết quả chép lời bằng AI?\nBạn có thể hoàn tác bằng nút Hoàn tác hoặc Ctrl+Z.')) return;
+    if (applyWhisperLyrics(value)) whisperProgress('Đã áp dụng vào lời bài hát. Hãy sửa lời nếu cần.', 100, false);
   });
 }
 

@@ -532,31 +532,31 @@ button.small.primary { padding: 4px 12px; }
           <button id="btnTap" title="边播放音乐边在每行开头轻点">轻点同步</button>
         </div>
         <div id="whisperBox" class="whisper-box">
-          <div class="sec-h"><h3 class="whisper-title">AI文字起こし</h3><span id="whisperDevice" class="muted mono"></span></div>
+          <div class="sec-h"><h3 class="whisper-title">AI 听写</h3><span id="whisperDevice" class="muted mono"></span></div>
           <div class="whisper-fields">
-            <label class="field">言語
-              <select id="whisperLang"><option value="auto">自动识别</option><option value="japanese">日本語</option><option value="english">英語</option></select>
+            <label class="field">语言
+              <select id="whisperLang"><option value="auto">自动检测</option><option value="japanese">日语</option><option value="english">英语</option></select>
             </label>
-            <label class="field">モデル
-              <select id="whisperModel"><option value="base">高精度 Base（推奨）</option><option value="tiny">高速 Tiny</option></select>
+            <label class="field">模型
+              <select id="whisperModel"><option value="base">高精度 Base（推荐）</option><option value="tiny">高速 Tiny</option></select>
             </label>
           </div>
           <div class="whisper-actions">
-            <button id="btnWhisper" class="accent">AIで歌词を文字起こし</button>
+            <button id="btnWhisper" class="accent">用 AI 听写歌词</button>
           </div>
-          <p id="whisperFirstNote" class="whisper-note muted">原曲を直接解析し、歌声を拾いやすい音量と帯域へ自动調整します。高精度 BaseはTinyより時間とメモリを使います。</p>
-          <p class="whisper-note muted">初回のみ選択したAIモデルを読み込みます。ダウンロード後はブラウザにキャッシュされます。</p>
+          <p id="whisperFirstNote" class="whisper-note muted">直接分析原曲，并自动调整为容易捕捉歌声的音量和频段。高精度 Base 比 Tiny 更耗时间和内存。</p>
+          <p class="whisper-note muted">仅在首次使用时加载所选的 AI 模型，下载后会缓存在浏览器中。</p>
           <div id="whisperProgressBox" class="whisper-progress" hidden>
-            <div class="progress" role="progressbar" aria-label="AI文字起こしの進行状況" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="whisperBar"></i></div>
-            <div class="whisper-status-row"><span id="whisperStatus" role="status" aria-live="polite">準備中</span><span id="whisperPercent" class="mono">0%</span></div>
+            <div class="progress" role="progressbar" aria-label="AI 听写进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="whisperBar"></i></div>
+            <div class="whisper-status-row"><span id="whisperStatus" role="status" aria-live="polite">准备中</span><span id="whisperPercent" class="mono">0%</span></div>
           </div>
           <div id="whisperResult" class="whisper-result" hidden>
-            <label class="field">文字起こし結果（反映前に修正できます）
-              <textarea id="whisperPreview" rows="7" spellcheck="false" aria-label="AI文字起こし結果"></textarea>
+            <label class="field">听写结果（应用前可修改）
+              <textarea id="whisperPreview" rows="7" spellcheck="false" aria-label="AI 听写结果"></textarea>
             </label>
-            <button id="btnApplyWhisper" class="primary">歌词欄に反映</button>
+            <button id="btnApplyWhisper" class="primary">应用到歌词栏</button>
           </div>
-          <p class="whisper-privacy">文字起こしと音声調整はブラウザ内で処理されます。音声ファイルは文字起こしAPIへ送信されません。</p>
+          <p class="whisper-privacy">听写和音频调整都在浏览器内处理，音频文件不会发送到任何听写 API。</p>
         </div>
         <div class="fields pro-only">
           <label class="field">BPM<input id="bpm" type="number" min="0" max="300" step="0.1" placeholder="自动"></label>
@@ -784,7 +784,7 @@ button.small.primary { padding: 4px 12px; }
     <p><a href="https://github.com/852wa/JIZURA" target="_blank" rel="noopener">https://github.com/852wa/JIZURA</a></p>
     <p class="muted terms-note">你输入的歌词和音乐只在此浏览器中处理，不会发送到服务器。</p>
     <details class="terms-oss"><summary>使用的开源软件</summary>
-      <p>MP4 导出：mp4-muxer（MIT License）<br>AI文字起こし：Transformers.js / Whisper Tiny・Base（Apache License 2.0）<br>字体：Google Fonts 提供的各款字体（SIL Open Font License 1.1）</p>
+      <p>MP4 导出：mp4-muxer（MIT License）<br>AI 听写：Transformers.js / Whisper Tiny、Base（Apache License 2.0）<br>字体：Google Fonts 提供的各款字体（SIL Open Font License 1.1）</p>
     </details>
     <div class="terms-foot"><span class="muted mono">© 2026 hakoniwa · MIT</span><button value="close" class="primary" autofocus>关闭</button></div>
   </form>
@@ -37101,28 +37101,28 @@ function whisperDevice(device) {
 function onWhisperProgress(info) {
   if (!info) return;
   whisperDevice(info.device);
-  if (info.phase === 'library') whisperProgress('AI機能を准备中…', 0, true);
-  else if (info.phase === 'model-loading') whisperProgress(`モデル準備中（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）…`, 0, true);
-  else if (info.phase === 'model-download') whisperProgress('モデルダウンロード中…', 0, true);
-  else if (info.phase === 'model-progress') { WT.hasTotal = true; whisperProgress(`モデルダウンロード中 ${Math.round(info.progress)}%`, info.progress, false); }
-  else if (info.phase === 'model-file-progress' && !WT.hasTotal) whisperProgress(`モデルダウンロード中 ${Math.round(info.progress)}%`, info.progress, false);
-  else if (info.phase === 'webgpu-unavailable') whisperProgress('WebGPU非対応のためWASMで実行します。', 0, true);
-  else if (info.phase === 'webgpu-fallback') whisperProgress('WebGPUを利用できなかったためWASMへ切り替えます。', 0, true);
-  else if (info.phase === 'model-ready') whisperProgress(`モデル準備完了（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）`, 100, false);
-  else if (info.phase === 'audio-preparing') whisperProgress('音声解析中（歌声を拾いやすく調整 · 16kHzモノラル化）…', 0, true);
-  else if (info.phase === 'transcribing') whisperProgress('文字起こし中…', 0, true);
-  else if (info.phase === 'complete') whisperProgress('文字起こし完了', 100, false);
+  if (info.phase === 'library') whisperProgress('正在准备 AI 功能…', 0, true);
+  else if (info.phase === 'model-loading') whisperProgress(`正在准备模型（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）…`, 0, true);
+  else if (info.phase === 'model-download') whisperProgress('正在下载模型…', 0, true);
+  else if (info.phase === 'model-progress') { WT.hasTotal = true; whisperProgress(`正在下载模型 ${Math.round(info.progress)}%`, info.progress, false); }
+  else if (info.phase === 'model-file-progress' && !WT.hasTotal) whisperProgress(`正在下载模型 ${Math.round(info.progress)}%`, info.progress, false);
+  else if (info.phase === 'webgpu-unavailable') whisperProgress('不支持 WebGPU，改用 WASM 运行。', 0, true);
+  else if (info.phase === 'webgpu-fallback') whisperProgress('无法使用 WebGPU，切换到 WASM。', 0, true);
+  else if (info.phase === 'model-ready') whisperProgress(`模型准备完成（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）`, 100, false);
+  else if (info.phase === 'audio-preparing') whisperProgress('正在分析音频（调整为容易捕捉歌声、转为 16kHz 单声道）…', 0, true);
+  else if (info.phase === 'transcribing') whisperProgress('听写中…', 0, true);
+  else if (info.phase === 'complete') whisperProgress('听写完成', 100, false);
 }
 function whisperErrorText(err) {
   const detail = String((err && err.cause && (err.cause.message || err.cause)) || (err && err.message) || '');
-  if (typeof navigator !== 'undefined' && navigator.onLine === false) return 'ネットワークに接続されておらず、AIモデルのキャッシュも見つかりません。初回はネットワーク接続が必要です。';
-  if (/out of memory|memory|allocation|oom|device lost/i.test(detail)) return 'メモリが不足しました。他のタブを閉じるか、短い音声で試してください。';
-  if (/failed to fetch|network|load failed|fetch/i.test(detail)) return 'AIモデルをダウンロードできませんでした。ネットワーク接続を確認してください。';
-  if (err && err.code === 'NO_AUDIO') return '先に曲を読み込んでください。';
-  if (err && err.code === 'AUDIO_UNSUPPORTED') return 'この音声形式を解析できませんでした。MP3 · WAV · M4Aなどで試してください。';
-  if (err && err.code === 'MODEL_LOAD_FAILED') return 'AIモデルを読み込めませんでした。ページを再読み込みして、もう一度試してください。';
-  if (err && err.code === 'EMPTY_RESULT') return '歌詞を認識できませんでした。音量や音声ファイルを確認してください。';
-  return '文字起こしに失敗しました。音声やブラウザのメモリを確認して、もう一度試してください。';
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return '当前未联网，也找不到 AI 模型的缓存。首次使用需要网络连接。';
+  if (/out of memory|memory|allocation|oom|device lost/i.test(detail)) return '内存不足。请关闭其他标签页，或改用较短的音频。';
+  if (/failed to fetch|network|load failed|fetch/i.test(detail)) return '无法下载 AI 模型。请检查网络连接。';
+  if (err && err.code === 'NO_AUDIO') return '请先加载歌曲。';
+  if (err && err.code === 'AUDIO_UNSUPPORTED') return '无法解析此音频格式。请改用 MP3、WAV、M4A 等格式。';
+  if (err && err.code === 'MODEL_LOAD_FAILED') return '无法加载 AI 模型。请刷新页面后重试。';
+  if (err && err.code === 'EMPTY_RESULT') return '未能识别歌词。请检查音量和音频文件。';
+  return '听写失败。请检查音频和浏览器内存后重试。';
 }
 function applyWhisperLyrics(value) {
   const lyrics = String(value || '').trim(); if (!lyrics) return false;
@@ -37132,7 +37132,7 @@ function applyWhisperLyrics(value) {
   pause(); P.lyrics = lyrics; P.timing.lineTimes = {}; P.overrides = {}; P.exportRange = null;
   $('lyrics').value = lyrics; fontKey = '';
   replan(); flushSave(); updateEditBtns(); seek(0);
-  toast('AI文字起こし結果を歌詞欄に反映しました（あとから修正できます）');
+  toast('已将 AI 听写结果应用到歌词栏（之后仍可修改）');
   return true;
 }
 function setAIBusy(busy) {
@@ -37151,12 +37151,12 @@ async function transcribeWhisperAudio(audioBuffer) {
   });
   $('whisperPreview').value = out.lrc;
   $('whisperResult').hidden = false; $('btnApplyWhisper').disabled = false;
-  whisperDevice(out.device); whisperProgress('文字起こし完了。内容を確認して歌詞欄へ反映してください。', 100, false);
+  whisperDevice(out.device); whisperProgress('听写完成。请确认内容后应用到歌词栏。', 100, false);
 }
 async function runWhisper() {
   if (WT.busy) return;
-  if (!S.audio || !S.audio.buffer) { whisperProgress('先に曲を読み込んでください。', 0, false); toast('先に曲を読み込んでください'); return; }
-  setAIBusy(true); pause(); whisperProgress('選択したAIモデルを准备中…（初回のみダウンロードします）', 0, true);
+  if (!S.audio || !S.audio.buffer) { whisperProgress('请先加载歌曲。', 0, false); toast('请先加载歌曲'); return; }
+  setAIBusy(true); pause(); whisperProgress('正在准备所选的 AI 模型…（仅首次需要下载）', 0, true);
   await new Promise(resolve => requestAnimationFrame(resolve));
   try { await transcribeWhisperAudio(S.audio.buffer); }
   catch (err) { console.error('[JIZURA Whisper] transcription failed', err, err && err.cause); whisperProgress(whisperErrorText(err), 0, false); }
@@ -37167,9 +37167,9 @@ function bindWhisper() {
   run.addEventListener('click', runWhisper);
   apply.addEventListener('click', () => {
     const value = $('whisperPreview').value;
-    if (!value.trim()) { whisperProgress('反映できる文字起こし結果がありません。', 0, false); return; }
-    if (S.project.lyrics.trim() && !window.confirm('現在の歌詞をAI文字起こし結果で置き換えますか？\n元に戻すボタンまたは Ctrl+Z で取り消せます。')) return;
-    if (applyWhisperLyrics(value)) whisperProgress('歌詞欄に反映しました。必要に応じて歌詞を修正してください。', 100, false);
+    if (!value.trim()) { whisperProgress('没有可应用的听写结果。', 0, false); return; }
+    if (S.project.lyrics.trim() && !window.confirm('要用 AI 听写结果替换当前歌词吗？\n可用“撤销”按钮或 Ctrl+Z 撤回。')) return;
+    if (applyWhisperLyrics(value)) whisperProgress('已应用到歌词栏。请根据需要修改歌词。', 100, false);
   });
 }
 

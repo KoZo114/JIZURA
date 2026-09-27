@@ -247,7 +247,21 @@ BODY = {
     '標準': 'Tiêu chuẩn',
     '最高': 'Tối đa',
     '高': 'Cao',
-    '中止': 'Đã hủy'
+    '中止': 'Đã hủy',
+    # AI transcription (src/10b_whisper.js)
+    '<h3 class="whisper-title">AI文字起こし</h3>': '<h3 class="whisper-title">Chép lời bằng AI</h3>',
+    '<label class="field">言語\n              <select id="whisperLang"><option value="auto">自動判定</option><option value="japanese">日本語</option><option value="english">英語</option></select>': '<label class="field">Ngôn ngữ\n              <select id="whisperLang"><option value="auto">Tự nhận diện</option><option value="japanese">Tiếng Nhật</option><option value="english">Tiếng Anh</option></select>',
+    '<label class="field">モデル\n              <select id="whisperModel"><option value="base">高精度 Base（推奨）</option><option value="tiny">高速 Tiny</option></select>': '<label class="field">Mô hình\n              <select id="whisperModel"><option value="base">Base chính xác (khuyên dùng)</option><option value="tiny">Tiny nhanh</option></select>',
+    '<button id="btnWhisper" class="accent">AIで歌詞を文字起こし</button>': '<button id="btnWhisper" class="accent">Chép lời bài hát bằng AI</button>',
+    '原曲を直接解析し、歌声を拾いやすい音量と帯域へ自動調整します。高精度 BaseはTinyより時間とメモリを使います。': 'Bản nhạc gốc được phân tích trực tiếp và tự động điều chỉnh âm lượng, dải tần để dễ bắt giọng hát. Base chính xác tốn nhiều thời gian và bộ nhớ hơn Tiny.',
+    '初回のみ選択したAIモデルを読み込みます。ダウンロード後はブラウザにキャッシュされます。': 'Mô hình AI đã chọn chỉ được tải ở lần đầu, sau đó được lưu vào bộ nhớ đệm của trình duyệt.',
+    'aria-label="AI文字起こしの進行状況"': 'aria-label="Tiến độ chép lời bằng AI"',
+    '<span id="whisperStatus" role="status" aria-live="polite">準備中</span>': '<span id="whisperStatus" role="status" aria-live="polite">Đang chuẩn bị</span>',
+    '文字起こし結果（反映前に修正できます）': 'Kết quả chép lời (có thể sửa trước khi áp dụng)',
+    'aria-label="AI文字起こし結果"': 'aria-label="Kết quả chép lời bằng AI"',
+    '<button id="btnApplyWhisper" class="primary">歌詞欄に反映</button>': '<button id="btnApplyWhisper" class="primary">Áp dụng vào lời bài hát</button>',
+    '文字起こしと音声調整はブラウザ内で処理されます。音声ファイルは文字起こしAPIへ送信されません。': 'Việc chép lời và điều chỉnh âm thanh được xử lý trong trình duyệt. Tệp âm thanh không được gửi tới API chép lời nào.',
+    'AI文字起こし：Transformers.js / Whisper Tiny・Base（Apache License 2.0）': 'Chép lời bằng AI: Transformers.js / Whisper Tiny và Base (Apache License 2.0)',
 }
 
 UI = {
@@ -431,7 +445,34 @@ UI = {
     '（PC）': '(đã cài đặt)',
     '字面': 'JIZURA',
     '追加': 'Mới',
-    '和': 'JP'
+    '和': 'JP',
+    # AI transcription (src/10b_whisper.js)
+    "'AI機能を準備中…'": "'Đang chuẩn bị tính năng AI…'",
+    "`モデル準備中（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）…`": "`Đang chuẩn bị mô hình (${info.device === 'webgpu' ? 'WebGPU' : 'WASM'})…`",
+    "'モデルダウンロード中…'": "'Đang tải mô hình…'",
+    '`モデルダウンロード中 ${Math.round(info.progress)}%`': '`Đang tải mô hình ${Math.round(info.progress)}%`',
+    "'WebGPU非対応のためWASMで実行します。'": "'Không hỗ trợ WebGPU nên sẽ chạy bằng WASM.'",
+    "'WebGPUを利用できなかったためWASMへ切り替えます。'": "'Không dùng được WebGPU nên chuyển sang WASM.'",
+    "`モデル準備完了（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）`": "`Mô hình đã sẵn sàng (${info.device === 'webgpu' ? 'WebGPU' : 'WASM'})`",
+    "'音声解析中（歌声を拾いやすく調整・16kHzモノラル化）…'": "'Đang phân tích âm thanh (điều chỉnh để dễ bắt giọng hát, chuyển sang mono 16 kHz)…'",
+    "'文字起こし中…'": "'Đang chép lời…'",
+    "'文字起こし完了'": "'Đã chép lời xong'",
+    "'ネットワークに接続されておらず、AIモデルのキャッシュも見つかりません。初回はネットワーク接続が必要です。'": "'Không có kết nối mạng và không tìm thấy bộ nhớ đệm của mô hình AI. Lần đầu sử dụng cần kết nối mạng.'",
+    "'メモリが不足しました。他のタブを閉じるか、短い音声で試してください。'": "'Không đủ bộ nhớ. Hãy đóng các thẻ khác hoặc thử với đoạn âm thanh ngắn hơn.'",
+    "'AIモデルをダウンロードできませんでした。ネットワーク接続を確認してください。'": "'Không thể tải mô hình AI. Hãy kiểm tra kết nối mạng.'",
+    "'先に曲を読み込んでください。'": "'Hãy tải bài hát trước.'",
+    "'この音声形式を解析できませんでした。MP3・WAV・M4Aなどで試してください。'": "'Không thể phân tích định dạng âm thanh này. Hãy thử MP3, WAV hoặc M4A.'",
+    "'AIモデルを読み込めませんでした。ページを再読み込みして、もう一度試してください。'": "'Không thể nạp mô hình AI. Hãy tải lại trang rồi thử lại.'",
+    "'歌詞を認識できませんでした。音量や音声ファイルを確認してください。'": "'Không nhận diện được lời bài hát. Hãy kiểm tra âm lượng và tệp âm thanh.'",
+    "'文字起こしに失敗しました。音声やブラウザのメモリを確認して、もう一度試してください。'": "'Chép lời thất bại. Hãy kiểm tra âm thanh và bộ nhớ trình duyệt rồi thử lại.'",
+    "'AI文字起こし結果を歌詞欄に反映しました（あとから修正できます）'": "'Đã áp dụng kết quả chép lời bằng AI vào lời bài hát (có thể sửa sau)'",
+    "'先に曲を読み込んでください'": "'Hãy tải bài hát trước'",
+    "'AI文字起こし機能を準備できませんでした。'": "'Không thể chuẩn bị tính năng chép lời bằng AI.'",
+    "'選択したAIモデルを準備中…（初回のみダウンロードします）'": "'Đang chuẩn bị mô hình AI đã chọn… (chỉ tải ở lần đầu)'",
+    "'文字起こし完了。内容を確認して歌詞欄へ反映してください。'": "'Đã chép lời xong. Hãy xem lại rồi áp dụng vào lời bài hát.'",
+    "'反映できる文字起こし結果がありません。'": "'Không có kết quả chép lời để áp dụng.'",
+    "'現在の歌詞をAI文字起こし結果で置き換えますか？\\n元に戻すボタンまたは Ctrl+Z で取り消せます。'": "'Thay lời hiện tại bằng kết quả chép lời bằng AI?\\nBạn có thể hoàn tác bằng nút Hoàn tác hoặc Ctrl+Z.'",
+    "'歌詞欄に反映しました。必要に応じて歌詞を修正してください。'": "'Đã áp dụng vào lời bài hát. Hãy sửa lời nếu cần.'",
 }
 
 EXPORT = {

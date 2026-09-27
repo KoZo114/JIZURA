@@ -532,31 +532,31 @@ button.small.primary { padding: 4px 12px; }
           <button id="btnTap" title="음원을 재생하며 각 줄이 시작될 때 탭">탭으로 동기화</button>
         </div>
         <div id="whisperBox" class="whisper-box">
-          <div class="sec-h"><h3 class="whisper-title">AI文字起こし</h3><span id="whisperDevice" class="muted mono"></span></div>
+          <div class="sec-h"><h3 class="whisper-title">AI 받아쓰기</h3><span id="whisperDevice" class="muted mono"></span></div>
           <div class="whisper-fields">
-            <label class="field">言語
-              <select id="whisperLang"><option value="auto">자동 감지</option><option value="japanese">日本語</option><option value="english">英語</option></select>
+            <label class="field">언어
+              <select id="whisperLang"><option value="auto">자동 감지</option><option value="japanese">일본어</option><option value="english">영어</option></select>
             </label>
-            <label class="field">モデル
-              <select id="whisperModel"><option value="base">높음精度 Base（推奨）</option><option value="tiny">높음速 Tiny</option></select>
+            <label class="field">모델
+              <select id="whisperModel"><option value="base">고정밀 Base(권장)</option><option value="tiny">고속 Tiny</option></select>
             </label>
           </div>
           <div class="whisper-actions">
-            <button id="btnWhisper" class="accent">AIで가사を文字起こし</button>
+            <button id="btnWhisper" class="accent">AI로 가사 받아쓰기</button>
           </div>
-          <p id="whisperFirstNote" class="whisper-note muted">原曲を直接解析し、歌声を拾いやすい音量と帯域へ자동調整します。높음精度 BaseはTinyより時間とメモリを使います。</p>
-          <p class="whisper-note muted">初回のみ選択したAIモデルを読み込みます。ダウンロード後はブラウザにキャッシュされます。</p>
+          <p id="whisperFirstNote" class="whisper-note muted">원곡을 직접 분석하고, 노랫소리를 잡기 쉬운 음량과 대역으로 자동 조정합니다. 고정밀 Base는 Tiny보다 시간과 메모리를 더 사용합니다.</p>
+          <p class="whisper-note muted">선택한 AI 모델은 처음 한 번만 불러옵니다. 다운로드 후에는 브라우저에 캐시됩니다.</p>
           <div id="whisperProgressBox" class="whisper-progress" hidden>
-            <div class="progress" role="progressbar" aria-label="AI文字起こしの進行状況" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="whisperBar"></i></div>
-            <div class="whisper-status-row"><span id="whisperStatus" role="status" aria-live="polite">準備中</span><span id="whisperPercent" class="mono">0%</span></div>
+            <div class="progress" role="progressbar" aria-label="AI 받아쓰기 진행 상황" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="whisperBar"></i></div>
+            <div class="whisper-status-row"><span id="whisperStatus" role="status" aria-live="polite">준비 중</span><span id="whisperPercent" class="mono">0%</span></div>
           </div>
           <div id="whisperResult" class="whisper-result" hidden>
-            <label class="field">文字起こし結果（反映前に修正できます）
-              <textarea id="whisperPreview" rows="7" spellcheck="false" aria-label="AI文字起こし結果"></textarea>
+            <label class="field">받아쓰기 결과(반영 전에 수정할 수 있습니다)
+              <textarea id="whisperPreview" rows="7" spellcheck="false" aria-label="AI 받아쓰기 결과"></textarea>
             </label>
-            <button id="btnApplyWhisper" class="primary">가사欄に反映</button>
+            <button id="btnApplyWhisper" class="primary">가사란에 반영</button>
           </div>
-          <p class="whisper-privacy">文字起こしと音声調整はブラウザ内で処理されます。音声ファイルは文字起こしAPIへ送信されません。</p>
+          <p class="whisper-privacy">받아쓰기와 음성 조정은 브라우저 안에서 처리됩니다. 음성 파일은 받아쓰기 API로 전송되지 않습니다.</p>
         </div>
         <div class="fields pro-only">
           <label class="field">BPM<input id="bpm" type="number" min="0" max="300" step="0.1" placeholder="자동"></label>
@@ -784,7 +784,7 @@ button.small.primary { padding: 4px 12px; }
     <p><a href="https://github.com/852wa/JIZURA" target="_blank" rel="noopener">https://github.com/852wa/JIZURA</a></p>
     <p class="muted terms-note">입력한 가사와 음원은 이 브라우저 안에서만 처리되며 서버로 전송되지 않습니다.</p>
     <details class="terms-oss"><summary>사용 중인 오픈소스</summary>
-      <p>MP4 내보내기: mp4-muxer (MIT License)<br>AI文字起こし：Transformers.js / Whisper Tiny・Base（Apache License 2.0）<br>글꼴: Google Fonts 배포 서체 (SIL Open Font License 1.1)</p>
+      <p>MP4 내보내기: mp4-muxer (MIT License)<br>AI 받아쓰기: Transformers.js / Whisper Tiny·Base (Apache License 2.0)<br>글꼴: Google Fonts 배포 서체 (SIL Open Font License 1.1)</p>
     </details>
     <div class="terms-foot"><span class="muted mono">© 2026 hakoniwa · MIT</span><button value="close" class="primary" autofocus>닫기</button></div>
   </form>
@@ -37184,28 +37184,28 @@ function whisperDevice(device) {
 function onWhisperProgress(info) {
   if (!info) return;
   whisperDevice(info.device);
-  if (info.phase === 'library') whisperProgress('AI機能を준비 중…', 0, true);
-  else if (info.phase === 'model-loading') whisperProgress(`モデル準備中（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）…`, 0, true);
-  else if (info.phase === 'model-download') whisperProgress('モデルダウンロード中…', 0, true);
-  else if (info.phase === 'model-progress') { WT.hasTotal = true; whisperProgress(`モデルダウンロード中 ${Math.round(info.progress)}%`, info.progress, false); }
-  else if (info.phase === 'model-file-progress' && !WT.hasTotal) whisperProgress(`モデルダウンロード中 ${Math.round(info.progress)}%`, info.progress, false);
-  else if (info.phase === 'webgpu-unavailable') whisperProgress('WebGPU非対応のためWASMで実줄 します。', 0, true);
-  else if (info.phase === 'webgpu-fallback') whisperProgress('WebGPUを利用できなかったためWASMへ切り替えます。', 0, true);
-  else if (info.phase === 'model-ready') whisperProgress(`モデル準備完了（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）`, 100, false);
-  else if (info.phase === 'audio-preparing') whisperProgress('音声解析中（歌声を拾いやすく調整 · 16kHzモノラル化）…', 0, true);
-  else if (info.phase === 'transcribing') whisperProgress('글자起こし中…', 0, true);
-  else if (info.phase === 'complete') whisperProgress('글자起こし完了', 100, false);
+  if (info.phase === 'library') whisperProgress('AI 기능 준비 중…', 0, true);
+  else if (info.phase === 'model-loading') whisperProgress(`모델 준비 중(${info.device === 'webgpu' ? 'WebGPU' : 'WASM'})…`, 0, true);
+  else if (info.phase === 'model-download') whisperProgress('모델 다운로드 중…', 0, true);
+  else if (info.phase === 'model-progress') { WT.hasTotal = true; whisperProgress(`모델 다운로드 중 ${Math.round(info.progress)}%`, info.progress, false); }
+  else if (info.phase === 'model-file-progress' && !WT.hasTotal) whisperProgress(`모델 다운로드 중 ${Math.round(info.progress)}%`, info.progress, false);
+  else if (info.phase === 'webgpu-unavailable') whisperProgress('WebGPU를 지원하지 않아 WASM으로 실행합니다.', 0, true);
+  else if (info.phase === 'webgpu-fallback') whisperProgress('WebGPU를 사용할 수 없어 WASM으로 전환합니다.', 0, true);
+  else if (info.phase === 'model-ready') whisperProgress(`모델 준비 완료(${info.device === 'webgpu' ? 'WebGPU' : 'WASM'})`, 100, false);
+  else if (info.phase === 'audio-preparing') whisperProgress('음성 분석 중(노랫소리를 잡기 쉽게 조정·16kHz 모노 변환)…', 0, true);
+  else if (info.phase === 'transcribing') whisperProgress('받아쓰기 중…', 0, true);
+  else if (info.phase === 'complete') whisperProgress('받아쓰기 완료', 100, false);
 }
 function whisperErrorText(err) {
   const detail = String((err && err.cause && (err.cause.message || err.cause)) || (err && err.message) || '');
-  if (typeof navigator !== 'undefined' && navigator.onLine === false) return 'ネットワークに接続されておらず、AIモデルのキャッシュも見つかりません。初回はネットワーク接続が必要です。';
-  if (/out of memory|memory|allocation|oom|device lost/i.test(detail)) return 'メモリが不足しました。他のタブを閉じるか、短い音声で試してください。';
-  if (/failed to fetch|network|load failed|fetch/i.test(detail)) return 'AIモデルをダウンロードできませんでした。ネットワーク接続を確認してください。';
-  if (err && err.code === 'NO_AUDIO') return '先に曲を読み込んでください。';
-  if (err && err.code === 'AUDIO_UNSUPPORTED') return 'この音声形式を解析できませんでした。MP3 · WAV · M4Aなどで試してください。';
-  if (err && err.code === 'MODEL_LOAD_FAILED') return 'AIモデルを読み込めませんでした。ページを再読み込みして、もう一度試してください。';
-  if (err && err.code === 'EMPTY_RESULT') return '歌詞を認識できませんでした。音量や音声ファイルを確認してください。';
-  return '글자起こしに失敗しました。音声やブラウザのメモリを確認して、もう一度試してください。';
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return '네트워크에 연결되어 있지 않고 AI 모델 캐시도 없습니다. 처음에는 네트워크 연결이 필요합니다.';
+  if (/out of memory|memory|allocation|oom|device lost/i.test(detail)) return '메모리가 부족합니다. 다른 탭을 닫거나 더 짧은 음성으로 시도해 보세요.';
+  if (/failed to fetch|network|load failed|fetch/i.test(detail)) return 'AI 모델을 다운로드하지 못했습니다. 네트워크 연결을 확인하세요.';
+  if (err && err.code === 'NO_AUDIO') return '먼저 곡을 불러오세요.';
+  if (err && err.code === 'AUDIO_UNSUPPORTED') return '이 음성 형식을 분석하지 못했습니다. MP3·WAV·M4A 등으로 시도해 보세요.';
+  if (err && err.code === 'MODEL_LOAD_FAILED') return 'AI 모델을 불러오지 못했습니다. 페이지를 새로 고친 뒤 다시 시도하세요.';
+  if (err && err.code === 'EMPTY_RESULT') return '가사를 인식하지 못했습니다. 음량과 음성 파일을 확인하세요.';
+  return '받아쓰기에 실패했습니다. 음성과 브라우저 메모리를 확인한 뒤 다시 시도하세요.';
 }
 function applyWhisperLyrics(value) {
   const lyrics = String(value || '').trim(); if (!lyrics) return false;
@@ -37215,7 +37215,7 @@ function applyWhisperLyrics(value) {
   pause(); P.lyrics = lyrics; P.timing.lineTimes = {}; P.overrides = {}; P.exportRange = null;
   $('lyrics').value = lyrics; fontKey = '';
   replan(); flushSave(); updateEditBtns(); seek(0);
-  toast('AI글자起こし結果を歌詞欄に反映しました（あとから修正できます）');
+  toast('AI 받아쓰기 결과를 가사란에 반영했습니다(나중에 수정할 수 있습니다)');
   return true;
 }
 function setAIBusy(busy) {
@@ -37234,12 +37234,12 @@ async function transcribeWhisperAudio(audioBuffer) {
   });
   $('whisperPreview').value = out.lrc;
   $('whisperResult').hidden = false; $('btnApplyWhisper').disabled = false;
-  whisperDevice(out.device); whisperProgress('글자起こし完了。内容を確認して歌詞欄へ反映してください。', 100, false);
+  whisperDevice(out.device); whisperProgress('받아쓰기 완료. 내용을 확인한 뒤 가사란에 반영하세요.', 100, false);
 }
 async function runWhisper() {
   if (WT.busy) return;
-  if (!S.audio || !S.audio.buffer) { whisperProgress('先に曲を読み込んでください。', 0, false); toast('先に曲を読み込んでください'); return; }
-  setAIBusy(true); pause(); whisperProgress('選択したAIモデルを준비 중…（初回のみダウンロードします）', 0, true);
+  if (!S.audio || !S.audio.buffer) { whisperProgress('먼저 곡을 불러오세요.', 0, false); toast('먼저 곡을 불러오세요'); return; }
+  setAIBusy(true); pause(); whisperProgress('선택한 AI 모델을 준비 중…(처음 한 번만 다운로드합니다)', 0, true);
   await new Promise(resolve => requestAnimationFrame(resolve));
   try { await transcribeWhisperAudio(S.audio.buffer); }
   catch (err) { console.error('[JIZURA Whisper] transcription failed', err, err && err.cause); whisperProgress(whisperErrorText(err), 0, false); }
@@ -37250,9 +37250,9 @@ function bindWhisper() {
   run.addEventListener('click', runWhisper);
   apply.addEventListener('click', () => {
     const value = $('whisperPreview').value;
-    if (!value.trim()) { whisperProgress('反映できる글자起こし結果がありません。', 0, false); return; }
-    if (S.project.lyrics.trim() && !window.confirm('現在の歌詞をAI글자起こし結果で置き換えますか？\n元に戻すボタンまたは Ctrl+Z で取り消せます。')) return;
-    if (applyWhisperLyrics(value)) whisperProgress('歌詞欄に反映しました。必要に応じて歌詞を修正してください。', 100, false);
+    if (!value.trim()) { whisperProgress('반영할 받아쓰기 결과가 없습니다.', 0, false); return; }
+    if (S.project.lyrics.trim() && !window.confirm('현재 가사를 AI 받아쓰기 결과로 바꿀까요?\n되돌리기 버튼이나 Ctrl+Z로 취소할 수 있습니다.')) return;
+    if (applyWhisperLyrics(value)) whisperProgress('가사란에 반영했습니다. 필요하면 가사를 수정하세요.', 100, false);
   });
 }
 

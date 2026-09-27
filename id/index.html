@@ -532,31 +532,31 @@ button.small.primary { padding: 4px 12px; }
           <button id="btnTap" title="Ketuk di awal setiap baris sambil lagu diputar">Sinkronkan ke ketukan</button>
         </div>
         <div id="whisperBox" class="whisper-box">
-          <div class="sec-h"><h3 class="whisper-title">AI文字起こし</h3><span id="whisperDevice" class="muted mono"></span></div>
+          <div class="sec-h"><h3 class="whisper-title">Transkripsi AI</h3><span id="whisperDevice" class="muted mono"></span></div>
           <div class="whisper-fields">
-            <label class="field">言語
-              <select id="whisperLang"><option value="auto">Deteksi otomatis</option><option value="japanese">日本語</option><option value="english">英語</option></select>
+            <label class="field">Bahasa
+              <select id="whisperLang"><option value="auto">Deteksi otomatis</option><option value="japanese">Jepang</option><option value="english">Inggris</option></select>
             </label>
-            <label class="field">モデル
-              <select id="whisperModel"><option value="base">Tinggi精度 Base（推奨）</option><option value="tiny">Tinggi速 Tiny</option></select>
+            <label class="field">Model
+              <select id="whisperModel"><option value="base">Base akurat (disarankan)</option><option value="tiny">Tiny cepat</option></select>
             </label>
           </div>
           <div class="whisper-actions">
-            <button id="btnWhisper" class="accent">AIでLirikを文字起こし</button>
+            <button id="btnWhisper" class="accent">Transkripsikan lirik dengan AI</button>
           </div>
-          <p id="whisperFirstNote" class="whisper-note muted">原曲を直接解析し、歌声を拾いやすい音量と帯域へOtomatis調整します。Tinggi精度 BaseはTinyより時間とメモリを使います。</p>
-          <p class="whisper-note muted">初回のみ選択したAIモデルを読み込みます。ダウンロード後はブラウザにキャッシュされます。</p>
+          <p id="whisperFirstNote" class="whisper-note muted">Lagu asli dianalisis langsung dan disesuaikan otomatis agar vokal lebih mudah ditangkap. Base akurat memakai lebih banyak waktu dan memori daripada Tiny.</p>
+          <p class="whisper-note muted">Model AI yang dipilih hanya dimuat saat pertama kali, lalu disimpan di cache browser.</p>
           <div id="whisperProgressBox" class="whisper-progress" hidden>
-            <div class="progress" role="progressbar" aria-label="AI文字起こしの進行状況" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="whisperBar"></i></div>
-            <div class="whisper-status-row"><span id="whisperStatus" role="status" aria-live="polite">準備中</span><span id="whisperPercent" class="mono">0%</span></div>
+            <div class="progress" role="progressbar" aria-label="Progres transkripsi AI" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="whisperBar"></i></div>
+            <div class="whisper-status-row"><span id="whisperStatus" role="status" aria-live="polite">Menyiapkan</span><span id="whisperPercent" class="mono">0%</span></div>
           </div>
           <div id="whisperResult" class="whisper-result" hidden>
-            <label class="field">文字起こし結果（反映前に修正できます）
-              <textarea id="whisperPreview" rows="7" spellcheck="false" aria-label="AI文字起こし結果"></textarea>
+            <label class="field">Hasil transkripsi (bisa diedit sebelum diterapkan)
+              <textarea id="whisperPreview" rows="7" spellcheck="false" aria-label="Hasil transkripsi AI"></textarea>
             </label>
-            <button id="btnApplyWhisper" class="primary">Lirik欄に反映</button>
+            <button id="btnApplyWhisper" class="primary">Terapkan ke lirik</button>
           </div>
-          <p class="whisper-privacy">文字起こしと音声調整はブラウザ内で処理されます。音声ファイルは文字起こしAPIへ送信されません。</p>
+          <p class="whisper-privacy">Transkripsi dan penyesuaian audio diproses di dalam browser. File audio Anda tidak dikirim ke API transkripsi.</p>
         </div>
         <div class="fields pro-only">
           <label class="field">BPM<input id="bpm" type="number" min="0" max="300" step="0.1" placeholder="Otomatis"></label>
@@ -784,7 +784,7 @@ button.small.primary { padding: 4px 12px; }
     <p><a href="https://github.com/852wa/JIZURA" target="_blank" rel="noopener">https://github.com/852wa/JIZURA</a></p>
     <p class="muted terms-note">Lirik dan audio yang kamu masukkan diproses hanya di browser ini dan tidak dikirim ke server.</p>
     <details class="terms-oss"><summary>Perangkat lunak open source</summary>
-      <p>Ekspor MP4: mp4-muxer（MIT License）<br>AI文字起こし：Transformers.js / Whisper Tiny・Base（Apache License 2.0）<br>Font: Google Fonts font yang didistribusikan（SIL Open Font License 1.1）</p>
+      <p>Ekspor MP4: mp4-muxer（MIT License）<br>Transkripsi AI: Transformers.js / Whisper Tiny dan Base (Apache License 2.0)<br>Font: Google Fonts font yang didistribusikan（SIL Open Font License 1.1）</p>
     </details>
     <div class="terms-foot"><span class="muted mono">© 2026 hakoniwa · MIT</span><button value="close" class="primary" autofocus>Tutup</button></div>
   </form>
@@ -36913,28 +36913,28 @@ function whisperDevice(device) {
 function onWhisperProgress(info) {
   if (!info) return;
   whisperDevice(info.device);
-  if (info.phase === 'library') whisperProgress('AI機能をMenyiapkan…', 0, true);
-  else if (info.phase === 'model-loading') whisperProgress(`モデル準備中（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）…`, 0, true);
-  else if (info.phase === 'model-download') whisperProgress('モデルダウンロード中…', 0, true);
-  else if (info.phase === 'model-progress') { WT.hasTotal = true; whisperProgress(`モデルダウンロード中 ${Math.round(info.progress)}%`, info.progress, false); }
-  else if (info.phase === 'model-file-progress' && !WT.hasTotal) whisperProgress(`モデルダウンロード中 ${Math.round(info.progress)}%`, info.progress, false);
-  else if (info.phase === 'webgpu-unavailable') whisperProgress('WebGPU非対応のためWASMで実baris します。', 0, true);
-  else if (info.phase === 'webgpu-fallback') whisperProgress('WebGPUを利用できなかったためWASMへ切り替えます。', 0, true);
-  else if (info.phase === 'model-ready') whisperProgress(`モデル準備完了（${info.device === 'webgpu' ? 'WebGPU' : 'WASM'}）`, 100, false);
-  else if (info.phase === 'audio-preparing') whisperProgress('音声解析中（歌声を拾いやすく調整 · 16kHzモノラル化）…', 0, true);
-  else if (info.phase === 'transcribing') whisperProgress('Teks起こし中…', 0, true);
-  else if (info.phase === 'complete') whisperProgress('Teks起こし完了', 100, false);
+  if (info.phase === 'library') whisperProgress('Menyiapkan fitur AI…', 0, true);
+  else if (info.phase === 'model-loading') whisperProgress(`Menyiapkan model (${info.device === 'webgpu' ? 'WebGPU' : 'WASM'})…`, 0, true);
+  else if (info.phase === 'model-download') whisperProgress('Mengunduh model…', 0, true);
+  else if (info.phase === 'model-progress') { WT.hasTotal = true; whisperProgress(`Mengunduh model ${Math.round(info.progress)}%`, info.progress, false); }
+  else if (info.phase === 'model-file-progress' && !WT.hasTotal) whisperProgress(`Mengunduh model ${Math.round(info.progress)}%`, info.progress, false);
+  else if (info.phase === 'webgpu-unavailable') whisperProgress('WebGPU tidak didukung; menggunakan WASM.', 0, true);
+  else if (info.phase === 'webgpu-fallback') whisperProgress('WebGPU tidak dapat digunakan; beralih ke WASM.', 0, true);
+  else if (info.phase === 'model-ready') whisperProgress(`Model siap (${info.device === 'webgpu' ? 'WebGPU' : 'WASM'})`, 100, false);
+  else if (info.phase === 'audio-preparing') whisperProgress('Menganalisis audio (menyesuaikan agar vokal mudah ditangkap, mono 16 kHz)…', 0, true);
+  else if (info.phase === 'transcribing') whisperProgress('Mentranskripsi…', 0, true);
+  else if (info.phase === 'complete') whisperProgress('Transkripsi selesai', 100, false);
 }
 function whisperErrorText(err) {
   const detail = String((err && err.cause && (err.cause.message || err.cause)) || (err && err.message) || '');
-  if (typeof navigator !== 'undefined' && navigator.onLine === false) return 'ネットワークに接続されておらず、AIモデルのキャッシュも見つかりません。初回はネットワーク接続が必要です。';
-  if (/out of memory|memory|allocation|oom|device lost/i.test(detail)) return 'メモリが不足しました。他のタブを閉じるか、短い音声で試してください。';
-  if (/failed to fetch|network|load failed|fetch/i.test(detail)) return 'AIモデルをダウンロードできませんでした。ネットワーク接続を確認してください。';
-  if (err && err.code === 'NO_AUDIO') return '先に曲を読み込んでください。';
-  if (err && err.code === 'AUDIO_UNSUPPORTED') return 'この音声形式を解析できませんでした。MP3 · WAV · M4Aなどで試してください。';
-  if (err && err.code === 'MODEL_LOAD_FAILED') return 'AIモデルを読み込めませんでした。ページを再読み込みして、もう一度試してください。';
-  if (err && err.code === 'EMPTY_RESULT') return '歌詞を認識できませんでした。音量や音声ファイルを確認してください。';
-  return 'Teks起こしに失敗しました。音声やブラウザのメモリを確認して、もう一度試してください。';
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return 'Anda sedang offline dan cache model AI tidak ditemukan. Penggunaan pertama memerlukan koneksi jaringan.';
+  if (/out of memory|memory|allocation|oom|device lost/i.test(detail)) return 'Memori tidak cukup. Tutup tab lain atau coba audio yang lebih pendek.';
+  if (/failed to fetch|network|load failed|fetch/i.test(detail)) return 'Tidak dapat mengunduh model AI. Periksa koneksi jaringan Anda.';
+  if (err && err.code === 'NO_AUDIO') return 'Muat lagu terlebih dahulu.';
+  if (err && err.code === 'AUDIO_UNSUPPORTED') return 'Format audio ini tidak dapat dianalisis. Coba MP3, WAV, atau M4A.';
+  if (err && err.code === 'MODEL_LOAD_FAILED') return 'Tidak dapat memuat model AI. Muat ulang halaman lalu coba lagi.';
+  if (err && err.code === 'EMPTY_RESULT') return 'Tidak ada lirik yang dikenali. Periksa volume dan file audio.';
+  return 'Transkripsi gagal. Periksa audio dan memori browser, lalu coba lagi.';
 }
 function applyWhisperLyrics(value) {
   const lyrics = String(value || '').trim(); if (!lyrics) return false;
@@ -36944,7 +36944,7 @@ function applyWhisperLyrics(value) {
   pause(); P.lyrics = lyrics; P.timing.lineTimes = {}; P.overrides = {}; P.exportRange = null;
   $('lyrics').value = lyrics; fontKey = '';
   replan(); flushSave(); updateEditBtns(); seek(0);
-  toast('AITeks起こし結果を歌詞欄に反映しました（あとから修正できます）');
+  toast('Hasil transkripsi AI diterapkan ke lirik (bisa diedit nanti)');
   return true;
 }
 function setAIBusy(busy) {
@@ -36963,12 +36963,12 @@ async function transcribeWhisperAudio(audioBuffer) {
   });
   $('whisperPreview').value = out.lrc;
   $('whisperResult').hidden = false; $('btnApplyWhisper').disabled = false;
-  whisperDevice(out.device); whisperProgress('Teks起こし完了。内容を確認して歌詞欄へ反映してください。', 100, false);
+  whisperDevice(out.device); whisperProgress('Transkripsi selesai. Periksa hasilnya, lalu terapkan ke lirik.', 100, false);
 }
 async function runWhisper() {
   if (WT.busy) return;
-  if (!S.audio || !S.audio.buffer) { whisperProgress('先に曲を読み込んでください。', 0, false); toast('先に曲を読み込んでください'); return; }
-  setAIBusy(true); pause(); whisperProgress('選択したAIモデルをMenyiapkan…（初回のみダウンロードします）', 0, true);
+  if (!S.audio || !S.audio.buffer) { whisperProgress('Muat lagu terlebih dahulu.', 0, false); toast('Muat lagu terlebih dahulu'); return; }
+  setAIBusy(true); pause(); whisperProgress('Menyiapkan model AI yang dipilih… (hanya diunduh saat pertama kali)', 0, true);
   await new Promise(resolve => requestAnimationFrame(resolve));
   try { await transcribeWhisperAudio(S.audio.buffer); }
   catch (err) { console.error('[JIZURA Whisper] transcription failed', err, err && err.cause); whisperProgress(whisperErrorText(err), 0, false); }
@@ -36979,9 +36979,9 @@ function bindWhisper() {
   run.addEventListener('click', runWhisper);
   apply.addEventListener('click', () => {
     const value = $('whisperPreview').value;
-    if (!value.trim()) { whisperProgress('反映できるTeks起こし結果がありません。', 0, false); return; }
-    if (S.project.lyrics.trim() && !window.confirm('現在の歌詞をAITeks起こし結果で置き換えますか？\n元に戻すボタンまたは Ctrl+Z で取り消せます。')) return;
-    if (applyWhisperLyrics(value)) whisperProgress('歌詞欄に反映しました。必要に応じて歌詞を修正してください。', 100, false);
+    if (!value.trim()) { whisperProgress('Tidak ada hasil transkripsi untuk diterapkan.', 0, false); return; }
+    if (S.project.lyrics.trim() && !window.confirm('Ganti lirik saat ini dengan hasil transkripsi AI?\nAnda bisa membatalkannya dengan tombol Urungkan atau Ctrl+Z.')) return;
+    if (applyWhisperLyrics(value)) whisperProgress('Diterapkan ke lirik. Edit teksnya bila perlu.', 100, false);
   });
 }
 
