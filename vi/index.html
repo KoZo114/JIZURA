@@ -102,6 +102,12 @@ label.file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; wi
 .bgimg-row .bgimg-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
 .bgimg-row input[type=range] { width: 100%; }
 .bgimg-row .note { margin-top: 0; }
+.tsize-row { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.tsize-row .row { flex-wrap: nowrap; min-width: 0; }
+.tsize-field { display: flex; align-items: center; gap: 8px; flex: 1 1 auto; min-width: 0; white-space: nowrap; }
+.tsize-field input[type=range] { flex: 1 1 auto; min-width: 60px; width: 100%; }
+.tsize-val { flex: none; min-width: 3.4em; text-align: right; }
+.tsize-row .note { margin-top: 0; }
 .muted { color: var(--muted); }
 .mono { font-family: var(--mono); }
 h2, h3 { margin: 0; font-weight: 600; }
@@ -664,6 +670,10 @@ button.small.primary { padding: 4px 12px; }
             <label class="field bgimg-dim-field">Dễ đọc chữ hơn (độ đậm màu nền phủ lên ảnh)<input class="bgimg-dim" type="range" min="0" max="90" step="5" aria-label="Độ đậm màu nền phủ lên ảnh"></label>
             <p class="note">Dùng ảnh hoặc hình làm nền; chữ và hiệu ứng vẫn chuyển động như thường ở phía trên (không có họa tiết nền của phong cách). Có trong bản xem trước, MP4 và chuỗi PNG. Ảnh không được lưu trong tệp dự án, nên hãy chọn lại sau khi mở lại.</p>
           </div>
+          <div class="tsize-row">
+            <div class="row"><label class="tsize-field">Cỡ chữ<input class="tsize" type="range" min="50" max="150" step="5" value="100" aria-label="Cỡ chữ"></label><span class="tsize-val mono">100%</span><button class="tsize-reset ghost small" hidden>Mặc định</button></div>
+            <p class="note">Phóng to hoặc thu nhỏ lời bài hát mà vẫn giữ nguyên ngắt dòng, vị trí và chuyển động (dải và khung vẽ cùng chữ cũng thay đổi theo). Khi phóng to, dòng sẽ dừng ngay trước mép khung hình, nên dòng vốn đã đầy màn hình sẽ không to thêm. Bố cục trải từ mép này sang mép kia của khung hình giữ nguyên kích thước gốc.</p>
+          </div>
           <label class="check center-free"><input id="eCenter" class="center-toggle" type="checkbox"><span>Để trống giữa (cho nhân vật)<small>Để đặt nhân vật hoặc video khác ở giữa: chữ và hiệu ứng đặt trái / phải trên khung ngang và trên / dưới trên khung dọc, xen kẽ từng dòng. Nền và hiệu ứng màn hình vẫn phủ toàn khung (xem trước đánh dấu vùng trống bằng nét đứt)</small></span></label>
           <label class="row center-dir" hidden>Khi khung dọc<select class="centerDirSel" aria-label="Cách chia trên khung dọc"><option value="tb">Trên / dưới</option><option value="lr">Trái / phải</option></select></label>
           <div class="rng-row"><span class="rng-lab">Xuất phạm vi</span><select class="rngFrom" aria-label="Hàng đầu tiên của phạm vi xuất"></select><span class="muted">〜</span><select class="rngTo" aria-label="Hàng cuối cùng của phạm vi xuất"></select><span class="rngInfo muted mono"></span></div>
@@ -702,6 +712,11 @@ button.small.primary { padding: 4px 12px; }
         <h3>Màu nền và văn bản</h3>
         <label class="check"><input id="colorOn" type="checkbox"><span>Sử dụng màu tùy chỉnh cho nền và văn bản chính</span></label>
         <div class="color-row" id="colorRow"></div>
+        <h3>Cỡ chữ</h3>
+        <div class="tsize-row">
+          <div class="row"><label class="tsize-field">Cỡ chữ<input class="tsize" type="range" min="50" max="150" step="5" value="100" aria-label="Cỡ chữ"></label><span class="tsize-val mono">100%</span><button class="tsize-reset ghost small" hidden>Mặc định</button></div>
+          <p class="note">Phóng to hoặc thu nhỏ lời bài hát mà vẫn giữ nguyên ngắt dòng, vị trí và chuyển động (dải và khung vẽ cùng chữ cũng thay đổi theo). Khi phóng to, dòng sẽ dừng ngay trước mép khung hình, nên dòng vốn đã đầy màn hình sẽ không to thêm. Bố cục trải từ mép này sang mép kia của khung hình giữ nguyên kích thước gốc.</p>
+        </div>
       </div>
 
       <div class="tabpane" data-pane="fx" hidden>
@@ -3444,6 +3459,7 @@ J.defaultProject = () => ({
   lang: 'auto',                   // 歌詞の言語: 'auto' | 'ja' | 'zh-Hant' | 'zh-Hans' | 'ko' — picks the faces each font key is drawn with
   keyBg: 'off',                   // 背景: 'off' | 'image' (写真・画像の上に文字) | 'green' (グリーンバック) | 'black' (ブラックバック)
   bgDim: 0.3,                     // 写真・画像: how much of the scheme's background colour is laid over the picture (0–0.9)
+  textScale: 1,                   // 文字の大きさ: 0.5–1.5 × the size each layout picks (applied at draw time, see Renderer.textScaleFor)
   unify: false,                   // 統一感: part palettes, repeats shown the same way, キメ, モーフ, 太さ
   typeset: false,                 // 文字整列: kana tracking, small particles / big first character, Latin sizing, 0.2 s lead, restraint
   centerDir: 'tb',                // 中央を空ける on tall frames: 'tb' = top / bottom, 'lr' = left / right
@@ -3665,6 +3681,7 @@ J.plan = (project, audio) => {
     hud: fx.hud === 'on' ? true : fx.hud === 'off' ? false : !!st.hud,
     keyBg: J.keyMode ? J.keyMode(project) : null,   // 'green' | 'black' | null — 合成用の背景
     photoBg: project.keyBg === 'image',             // 写真・画像: the picture itself lives in J.userBg (not in the plan / project file)
+    textScale: J.clamp(Number.isFinite(+project.textScale) ? +project.textScale : 1, 0.5, 1.5),   // 文字の大きさ
     centerFree: !!zones, zones,
     typeset: !!project.typeset, unify: !!project.unify,
     lang: J.resolveLang ? J.resolveLang(project) : 'ja',   // 歌詞の言語 (auto → detected)
@@ -4772,7 +4789,7 @@ class Renderer {
   /* モーフ: where every glyph of the previous cut rests at its end, and where this cut's glyphs land (cached) */
   morphLogs(plan, A, B, cw, ch, scale, opt) {
     if (!this.morphCache || this.morphCache.plan !== plan) this.morphCache = { plan, map: new Map() };
-    const key = A.index + ':' + B.index + ':' + cw + 'x' + ch + ':' + scale.toFixed(4), M = this.morphCache.map;
+    const key = A.index + ':' + B.index + ':' + cw + 'x' + ch + ':' + scale.toFixed(4) + ':' + (+plan.textScale || 1).toFixed(3), M = this.morphCache.map;
     if (M.has(key)) return M.get(key);
     const cv = this.ensure(this.morphCv || (this.morphCv = mk(2, 2)), cw, ch), x = cv.getContext('2d');
     const o2 = { scale, noPost: true, noHud: true, noTrans: true, noGhost: true, transparent: opt.transparent, fast: true };
@@ -4897,9 +4914,163 @@ class Renderer {
     if (env.layer !== 'front') for (const d of decor) { const D = J.DECOR[d.id]; if (D && D.layer === 'back') try { D.draw(env, null, d); } catch (e) { console.warn(e); } }
     if (env.layer === 'back') return null;                // 後景だけ: the lyrics and the front decorations go to the other layer
     let bb = null;
+    const TS = this.textScaleFor(env);
+    if (TS) this.textScaleBegin(env, TS);
     try { bb = L.render(env); } catch (e) { console.warn('layout', cut.layout, e); }
+    if (TS) bb = this.textScaleEnd(env, TS, bb);
     for (const d of decor) { const D = J.DECOR[d.id]; if (D && D.layer === 'front') try { D.draw(env, bb, d); } catch (e) { console.warn(e); } }
     return bb;
+  }
+
+  /* 文字の大きさ (plan.textScale): the layout — the lyric with everything the layout draws around it (plates, signs,
+     cells, its own lines) — is drawn scaled about the centre of the lyric as it rests on screen, so line breaks,
+     spacing, overlaps and every motion stay exactly as the layout made them, only larger or smaller.
+       - the anchor and the room for growing come from one measuring pass per cut at a resting moment (deterministic:
+         the preview and every export agree); a cut never grows past a small margin inside the frame — when its
+         lyric already fills the frame it keeps its size instead of being cut off
+       - shapes the layout pins to the frame (full-width bands, letterbox bars, panels from the edge) keep touching
+         the frame edges; only their inner edges follow the lyric
+       - the front decorations get the scaled bbox so underlines / brackets / marks follow the lyric          */
+  textScaleFor(env) {
+    const plan = env.plan, cut = env.cut, s0 = plan && +plan.textScale;
+    if (!cut || !s0 || Math.abs(s0 - 1) < 0.005) return null;
+    const W = env.W, H = env.H, key = s0.toFixed(3) + ':' + W + 'x' + H;
+    const C = this.tsCache || (this.tsCache = new WeakMap());
+    const hit = C.get(cut);
+    if (hit && hit.key === key) return hit.v;
+    let v = { s: s0, ax: W / 2, ay: H / 2 };
+    try {
+      // measuring canvas: a small copy of the frame (long side 256 px); what the layout draws there — lyric, plates,
+      // signs, its own lines — gives the room; shapes pinned to the frame edges are left out (they stay put anyway)
+      const k = 256 / Math.max(W, H), cw = Math.max(8, Math.ceil(W * k)), ch = Math.max(8, Math.ceil(H * k));
+      const cv = this.tsCv || (this.tsCv = mk(2, 2));
+      if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; }
+      const x = cv.getContext('2d', { willReadFrequently: true });
+      const tol = Math.min(W, H) * 0.004;
+      const edge = pts => { const T = x.getTransform(); return pts.some(([px, py]) => { const d = T.transformPoint({ x: px, y: py }), fx = d.x / k, fy = d.y / k; return fx <= tol || fx >= W - tol || fy <= tol || fy >= H - tol; }); };
+      const a = Math.max(0, cut.inDur || 0) + Math.max(0, cut.stagger || 0) * 4, b = cut.dur - Math.max(0, cut.outDur || 0) - 0.02;
+      // a few moments of the hold, so layouts that keep moving (swinging, orbiting, drifting) are covered;
+      // each moment keeps its camera (push-in, drift…) so the room is checked where the lyric really lands
+      const sc = env.sc || plan.style.schemes[0], L = J.LAYOUTS[cut.layout] || J.LAYOUTS.center, CD = J.CAMERA[cut.cam] || J.CAMERA.push;
+      const samples = [];
+      let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, spans = 0;
+      for (const f of [0, 0.2, 0.4, 0.6, 0.8, 1]) {
+        const lt = b > a ? a + (b - a) * f : cut.dur * f, log = [];
+        x.setTransform(1, 0, 0, 1, 0, 0); x.globalAlpha = 1; x.globalCompositeOperation = 'source-over'; x.filter = 'none'; x.clearRect(0, 0, cw, ch);
+        x.setTransform(k, 0, 0, k, 0, 0);
+        const e = this.makeEnv(x, plan, cut, sc, { pass: 'main', t: cut.start + lt, lt, ltb: lt, step: 0, scale: k, allowFilter: false, energy: null, beat: null, zone: env.zone || null, glyphLog: log });
+        const rect0 = e.rect, line0 = e.line;
+        e.rect = (rx, ry, rw, rh, ...r) => { if (!edge([[rx, ry], [rx + rw, ry], [rx, ry + rh], [rx + rw, ry + rh]])) rect0(rx, ry, rw, rh, ...r); };
+        e.line = (pts, ...r) => { if (!pts || !edge(pts)) line0(pts, ...r); };
+        x.save(); try { L.render(e); } finally { x.restore(); }
+        let cam = null; try { cam = CD.get(e, cut.camP || {}); } catch (err) { cam = null; }
+        cam = cam || {};
+        const cs = cam.s ?? 1;
+        let M = new DOMMatrix().translate(W / 2 + (cam.x || 0), H / 2 + (cam.y || 0));
+        if (cam.rot) M = M.rotate(cam.rot);
+        if (cam.skx) M = M.skewX(cam.skx);
+        M = M.scale(cs * (cam.sx ?? 1), cs * (cam.sy ?? 1)).translate(-W / 2, -H / 2);
+        const boxes = [];
+        // the lyric itself (device space of the measuring canvas → frame units): its middle is the anchor
+        for (const g of log) {
+          if (!(g.a > 0.05)) continue;
+          const [ma, mb, mc, md, me, mf] = g.m.map(v => v / k), hw = 0.55 * g.px * (Math.abs(ma) + Math.abs(mc)), hh = 0.55 * g.px * (Math.abs(mb) + Math.abs(md));
+          if (!Number.isFinite(me + mf + hw + hh)) continue;
+          boxes.push([me - hw, mf - hh, me + hw, mf + hh]);
+          x0 = Math.min(x0, me - hw); x1 = Math.max(x1, me + hw); y0 = Math.min(y0, mf - hh); y1 = Math.max(y1, mf + hh);
+        }
+        // everything the layout painted (alpha bounds)
+        const px = x.getImageData(0, 0, cw, ch).data;
+        let p0 = cw, q0 = ch, p1 = -1, q1 = -1;
+        for (let yy = 0; yy < ch; yy++) for (let xx = 0, o = yy * cw * 4 + 3; xx < cw; xx++, o += 4) if (px[o] > 40) { if (xx < p0) p0 = xx; if (xx > p1) p1 = xx; if (yy < q0) q0 = yy; if (yy > q1) q1 = yy; }
+        if (p1 >= 0) {
+          boxes.push([p0 / k, q0 / k, (p1 + 1) / k, (q1 + 1) / k]);
+          if ((p0 === 0 && p1 === cw - 1) || (q0 === 0 && q1 === ch - 1)) spans++;
+        }
+        samples.push({ M, boxes });
+      }
+      // the layout paints from one edge of the frame to the other (curtains, tiles, walls of text, lyrics that bleed
+      // off both sides): scaling it would pull those edges into the frame, so it keeps the size it was designed with
+      if (spans >= 3) v = { s: 1, ax: W / 2, ay: H / 2 };
+      else if (x1 > x0 && y1 > y0) {
+        // the anchor is the middle of the resting lyric (kept inside the frame), so it grows / shrinks in place
+        const ax = J.clamp((x0 + x1) / 2, 0, W), ay = J.clamp((y0 + y1) / 2, 0, H);
+        let s = s0;
+        if (s0 > 1) {
+          // largest scale (up to s0) that keeps every glyph a small margin inside the frame, camera included;
+          // a lyric that already reaches the edge keeps its size (never shrinks because "larger" was asked)
+          const m = Math.min(W, H) * 0.03;
+          const lim = (q0, d, lo, hi) => d > 1e-6 ? (hi - q0) / d : d < -1e-6 ? (lo - q0) / d : Infinity;
+          for (const { M, boxes } of samples) {
+            const A0 = M.transformPoint({ x: ax, y: ay });
+            for (const [bx0, by0, bx1, by1] of boxes) for (const [px, py] of [[bx0, by0], [bx1, by0], [bx0, by1], [bx1, by1]]) {
+              const dx = M.a * (px - ax) + M.c * (py - ay), dy = M.b * (px - ax) + M.d * (py - ay);
+              s = Math.min(s, lim(A0.x, dx, m, W - m), lim(A0.y, dy, m, H - m));
+            }
+          }
+          s = J.clamp(s, 1, s0);
+        }
+        v = { s, ax, ay };
+      }
+    } catch (err) { console.warn('textScale', cut.layout, err); }
+    if (Math.abs(v.s - 1) < 0.005) v = null;
+    C.set(cut, { key, v });
+    return v;
+  }
+  /* work out 文字の大きさ for a cut ahead of time (the editor does this while idle, so playback never waits for it) */
+  warmTextScale(plan, cut) {
+    if (!plan || !cut || Math.abs((+plan.textScale || 1) - 1) < 0.005) return;
+    const sts = plan.style.schemes, sc = sts[cut.scheme % sts.length] || sts[0];
+    const env = this.makeEnv(this.tsCv ? this.tsCv.getContext('2d') : mk(2, 2).getContext('2d'), plan, cut, sc, { pass: 'main', t: cut.start, lt: 0, ltb: 0, step: 0, scale: 1, zone: plan.centerFree && cut.zone ? cut.zone : null });
+    this.textScaleFor(env);
+  }
+  textScaleBegin(env, TS) {
+    const ctx = env.ctx;
+    ctx.save();
+    const B = ctx.getTransform();              // frame space of this cut (camera included)
+    ctx.translate(TS.ax, TS.ay); ctx.scale(TS.s, TS.s); ctx.translate(-TS.ax, -TS.ay);
+    const BSi = ctx.getTransform().inverse();  // device -> scaled layout frame space
+    const tol = Math.min(env.W, env.H) * 0.004, W = env.W, H = env.H;
+    const sx = v => TS.ax + (v - TS.ax) * TS.s, sy = v => TS.ay + (v - TS.ay) * TS.s;
+    // local point -> frame space as the layout designed it (before scaling)
+    const toFrame = (M, px, py) => { const d = M.transformPoint({ x: px, y: py }), f = BSi.transformPoint(d); return [f.x, f.y]; };
+    const rect0 = env.rect, line0 = env.line;
+    TS.saved = { rect: rect0, line: line0 };
+    env.rect = (x, y, w, h, c, a = 1, g = true) => {
+      const M = ctx.getTransform(), L = BSi.multiply(M);
+      if (Math.abs(L.b) < 1e-6 && Math.abs(L.c) < 1e-6 && w > 0 && h > 0) {
+        const [fx0, fy0] = toFrame(M, x, y), [fx1, fy1] = toFrame(M, x + w, y + h);
+        const X0 = Math.min(fx0, fx1), X1 = Math.max(fx0, fx1), Y0 = Math.min(fy0, fy1), Y1 = Math.max(fy0, fy1);
+        const pl = X0 <= tol, pr = X1 >= W - tol, pt = Y0 <= tol, pb = Y1 >= H - tol;
+        if (pl || pr || pt || pb) {
+          const nx0 = pl ? X0 : sx(X0), nx1 = pr ? X1 : sx(X1), ny0 = pt ? Y0 : sy(Y0), ny1 = pb ? Y1 : sy(Y1);
+          if (nx1 <= nx0 || ny1 <= ny0) return;
+          ctx.save(); ctx.setTransform(B); rect0(nx0, ny0, nx1 - nx0, ny1 - ny0, c, a, g); ctx.restore();
+          return;
+        }
+      }
+      rect0(x, y, w, h, c, a, g);
+    };
+    env.line = (pts, c, lw = 1, a = 1, g = true) => {
+      if (!pts || pts.length < 2) return line0(pts, c, lw, a, g);
+      const M = ctx.getTransform();
+      const fp = pts.map(p => toFrame(M, p[0], p[1]));
+      const pin = p => [p[0] <= tol || p[0] >= W - tol, p[1] <= tol || p[1] >= H - tol];
+      if (!fp.some(p => { const q = pin(p); return q[0] || q[1]; })) return line0(pts, c, lw, a, g);
+      const np = fp.map(p => { const q = pin(p); return [q[0] ? p[0] : sx(p[0]), q[1] ? p[1] : sy(p[1])]; });
+      ctx.save(); ctx.setTransform(B); line0(np, c, lw, a, g); ctx.restore();
+    };
+  }
+  textScaleEnd(env, TS, bb) {
+    env.ctx.restore();
+    if (TS.saved) { env.rect = TS.saved.rect; env.line = TS.saved.line; TS.saved = null; }
+    if (!bb) return bb;
+    const s = TS.s, X = v => TS.ax + (v - TS.ax) * s, Y = v => TS.ay + (v - TS.ay) * s;
+    const o = Object.assign({}, bb, { x0: X(bb.x0), x1: X(bb.x1), y0: Y(bb.y0), y1: Y(bb.y1) });
+    if (bb.cx != null) o.cx = X(bb.cx);
+    if (bb.cy != null) o.cy = Y(bb.cy);
+    if (Array.isArray(bb.boxes)) o.boxes = bb.boxes.map(b => Object.assign({}, b, { x: b.x * s, y: b.y * s, w: b.w * s, h: b.h * s }));
+    return o;
   }
 
   /* 透過PNG: screen effects are written for an opaque frame (they paint the background colour, wash the whole frame,
@@ -36273,6 +36444,7 @@ function mergeProject(p) {
   delete o.appVersion;
   if (!['off', 'image', 'green', 'black'].includes(o.keyBg)) o.keyBg = 'off';
   o.bgDim = J.clamp(Number.isFinite(+o.bgDim) ? +o.bgDim : 0.3, 0, 0.9);
+  o.textScale = J.clamp(Number.isFinite(+o.textScale) ? +o.textScale : 1, 0.5, 1.5);
   // project files are untrusted: colours must be colours, font keys plain keys (they end up in the page's HTML / CSS)
   o.colors = { enabled: !!(p && p.colors && p.colors.enabled) };
   for (const [k, v] of Object.entries((p && p.colors) || {})) {
@@ -36333,6 +36505,17 @@ function replan() {
 let warmTimer = 0, warmJob = 0;
 function warm() {
   const job = ++warmJob;
+  // Chữの大きさ: each cut measures its room once — do that now rather than on the first frame of the cut
+  if (Math.abs((+S.plan.textScale || 1) - 1) > 0.005) {
+    const plan = S.plan, all = plan.cuts.slice(); let j = 0;
+    const idle0 = window.requestIdleCallback ? (f) => window.requestIdleCallback(f, { timeout: 400 }) : (f) => setTimeout(() => f(null), 40);
+    const stepTs = (deadline) => {
+      if (job !== warmJob || S.exporting || plan !== S.plan) return;
+      do { const c = all[j++]; if (!c) break; try { S.renderer.warmTextScale(plan, c); } catch (e) {} } while (j < all.length && deadline && deadline.timeRemaining() > 8);
+      if (j < all.length) idle0(stepTs);
+    };
+    idle0(stepTs);
+  }
   const cuts = S.plan.cuts.filter(c => c.enter === 'assemble' || ['explode', 'fall', 'drift'].includes(c.exit));
   const src = $('view');
   const cv = document.createElement('canvas'); cv.width = src.width; cv.height = src.height;
@@ -37558,6 +37741,20 @@ function syncOut() {
   kb.hidden = k === 'off';
   if (k !== 'off') kb.innerHTML = `<i style="background:${J.KEY_BG[k]}"></i>${k === 'green' ? 'Màn hình xanh' : 'Nền đen'}`;
   syncBgImage();
+  syncTextScale();
+}
+/* Chữの大きさ — a draw-time scale of each layout (Renderer.textScaleFor); no replan needed */
+function syncTextScale() {
+  const v = J.clamp(Number.isFinite(+S.project.textScale) ? +S.project.textScale : 1, 0.5, 1.5), pct = Math.round(v * 100);
+  document.querySelectorAll('.tsize').forEach(el => { if (+el.value !== pct) el.value = String(pct); });
+  document.querySelectorAll('.tsize-val').forEach(el => { el.textContent = pct + '%'; });
+  document.querySelectorAll('.tsize-reset').forEach(el => { el.hidden = pct === 100; });
+}
+function setTextScale(v) {
+  S.project.textScale = J.clamp(Math.round(v * 100) / 100, 0.5, 1.5);
+  if (S.plan) S.plan.textScale = S.project.textScale;
+  syncTextScale(); S.need = true; autosave();
+  clearTimeout(warmTimer); warmTimer = setTimeout(warm, 450);
 }
 /* Nền：写真·画像 — the picture is kept in memory only (J.userBg); its strength is saved with the project */
 function syncBgImage() {
@@ -37879,6 +38076,8 @@ function bind() {
     if (J.userBg) { J.userBg.img = null; J.userBg.name = ''; }
     syncBgImage(); S.need = true; toast('Đã bỏ ảnh nền');
   }));
+  document.querySelectorAll('.tsize').forEach(el => el.addEventListener('input', e => setTextScale(+e.target.value / 100)));
+  document.querySelectorAll('.tsize-reset').forEach(el => el.addEventListener('click', () => setTextScale(1)));
   document.querySelectorAll('.bgimg-dim').forEach(el => el.addEventListener('input', e => {
     S.project.bgDim = J.clamp(+e.target.value / 100, 0, 0.9); syncBgImage(); S.need = true; autosave();
   }));

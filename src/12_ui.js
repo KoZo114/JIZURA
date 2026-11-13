@@ -115,6 +115,7 @@ function mergeProject(p) {
   delete o.appVersion;
   if (!['off', 'image', 'green', 'black'].includes(o.keyBg)) o.keyBg = 'off';
   o.bgDim = J.clamp(Number.isFinite(+o.bgDim) ? +o.bgDim : 0.3, 0, 0.9);
+  o.textScale = J.clamp(Number.isFinite(+o.textScale) ? +o.textScale : 1, 0.5, 1.5);
   // project files are untrusted: colours must be colours, font keys plain keys (they end up in the page's HTML / CSS)
   o.colors = { enabled: !!(p && p.colors && p.colors.enabled) };
   for (const [k, v] of Object.entries((p && p.colors) || {})) {
@@ -175,6 +176,17 @@ function replan() {
 let warmTimer = 0, warmJob = 0;
 function warm() {
   const job = ++warmJob;
+  // 文字の大きさ: each cut measures its room once — do that now rather than on the first frame of the cut
+  if (Math.abs((+S.plan.textScale || 1) - 1) > 0.005) {
+    const plan = S.plan, all = plan.cuts.slice(); let j = 0;
+    const idle0 = window.requestIdleCallback ? (f) => window.requestIdleCallback(f, { timeout: 400 }) : (f) => setTimeout(() => f(null), 40);
+    const stepTs = (deadline) => {
+      if (job !== warmJob || S.exporting || plan !== S.plan) return;
+      do { const c = all[j++]; if (!c) break; try { S.renderer.warmTextScale(plan, c); } catch (e) {} } while (j < all.length && deadline && deadline.timeRemaining() > 8);
+      if (j < all.length) idle0(stepTs);
+    };
+    idle0(stepTs);
+  }
   const cuts = S.plan.cuts.filter(c => c.enter === 'assemble' || ['explode', 'fall', 'drift'].includes(c.exit));
   const src = $('view');
   const cv = document.createElement('canvas'); cv.width = src.width; cv.height = src.height;
@@ -1400,6 +1412,20 @@ function syncOut() {
   kb.hidden = k === 'off';
   if (k !== 'off') kb.innerHTML = `<i style="background:${J.KEY_BG[k]}"></i>${k === 'green' ? 'グリーンバック' : 'ブラックバック'}`;
   syncBgImage();
+  syncTextScale();
+}
+/* 文字の大きさ — a draw-time scale of each layout (Renderer.textScaleFor); no replan needed */
+function syncTextScale() {
+  const v = J.clamp(Number.isFinite(+S.project.textScale) ? +S.project.textScale : 1, 0.5, 1.5), pct = Math.round(v * 100);
+  document.querySelectorAll('.tsize').forEach(el => { if (+el.value !== pct) el.value = String(pct); });
+  document.querySelectorAll('.tsize-val').forEach(el => { el.textContent = pct + '%'; });
+  document.querySelectorAll('.tsize-reset').forEach(el => { el.hidden = pct === 100; });
+}
+function setTextScale(v) {
+  S.project.textScale = J.clamp(Math.round(v * 100) / 100, 0.5, 1.5);
+  if (S.plan) S.plan.textScale = S.project.textScale;
+  syncTextScale(); S.need = true; autosave();
+  clearTimeout(warmTimer); warmTimer = setTimeout(warm, 450);
 }
 /* 背景：写真・画像 — the picture is kept in memory only (J.userBg); its strength is saved with the project */
 function syncBgImage() {
@@ -1721,6 +1747,8 @@ function bind() {
     if (J.userBg) { J.userBg.img = null; J.userBg.name = ''; }
     syncBgImage(); S.need = true; toast('背景の画像を外しました');
   }));
+  document.querySelectorAll('.tsize').forEach(el => el.addEventListener('input', e => setTextScale(+e.target.value / 100)));
+  document.querySelectorAll('.tsize-reset').forEach(el => el.addEventListener('click', () => setTextScale(1)));
   document.querySelectorAll('.bgimg-dim').forEach(el => el.addEventListener('input', e => {
     S.project.bgDim = J.clamp(+e.target.value / 100, 0, 0.9); syncBgImage(); S.need = true; autosave();
   }));

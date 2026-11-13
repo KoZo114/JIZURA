@@ -79,6 +79,12 @@ label.file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; wi
 .bgimg-row .bgimg-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
 .bgimg-row input[type=range] { width: 100%; }
 .bgimg-row .note { margin-top: 0; }
+.tsize-row { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.tsize-row .row { flex-wrap: nowrap; min-width: 0; }
+.tsize-field { display: flex; align-items: center; gap: 8px; flex: 1 1 auto; min-width: 0; white-space: nowrap; }
+.tsize-field input[type=range] { flex: 1 1 auto; min-width: 60px; width: 100%; }
+.tsize-val { flex: none; min-width: 3.4em; text-align: right; }
+.tsize-row .note { margin-top: 0; }
 .muted { color: var(--muted); }
 .mono { font-family: var(--mono); }
 h2, h3 { margin: 0; font-weight: 600; }
