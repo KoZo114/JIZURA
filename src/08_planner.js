@@ -22,6 +22,7 @@ J.defaultProject = () => ({
   lang: 'auto',                   // 歌詞の言語: 'auto' | 'ja' | 'zh-Hant' | 'zh-Hans' | 'ko' — picks the faces each font key is drawn with
   keyBg: 'off',                   // 背景: 'off' | 'image' (写真・画像の上に文字) | 'green' (グリーンバック) | 'black' (ブラックバック)
   bgDim: 0.3,                     // 写真・画像: how much of the scheme's background colour is laid over the picture (0–0.9)
+  textScale: 1,                   // 文字の大きさ: 0.5–1.5 × the size each layout picks (applied at draw time, see Renderer.textScaleFor)
   unify: false,                   // 統一感: part palettes, repeats shown the same way, キメ, モーフ, 太さ
   typeset: false,                 // 文字整列: kana tracking, small particles / big first character, Latin sizing, 0.2 s lead, restraint
   centerDir: 'tb',                // 中央を空ける on tall frames: 'tb' = top / bottom, 'lr' = left / right
@@ -243,6 +244,7 @@ J.plan = (project, audio) => {
     hud: fx.hud === 'on' ? true : fx.hud === 'off' ? false : !!st.hud,
     keyBg: J.keyMode ? J.keyMode(project) : null,   // 'green' | 'black' | null — 合成用の背景
     photoBg: project.keyBg === 'image',             // 写真・画像: the picture itself lives in J.userBg (not in the plan / project file)
+    textScale: J.clamp(Number.isFinite(+project.textScale) ? +project.textScale : 1, 0.5, 1.5),   // 文字の大きさ
     centerFree: !!zones, zones,
     typeset: !!project.typeset, unify: !!project.unify,
     lang: J.resolveLang ? J.resolveLang(project) : 'ja',   // 歌詞の言語 (auto → detected)

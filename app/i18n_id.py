@@ -41,6 +41,9 @@ STYLES = {
 }
 
 BODY = {
+    '文字の大きさ': 'Ukuran teks',
+    '標準に戻す': 'Kembalikan',
+    '歌詞の文字を、改行・配置・動きはそのままに大きく／小さくします（文字と一緒に描かれる帯や枠も合わせて変わります）。大きくするときは画面の端の手前で止まるので、もともと画面いっぱいの行はそれ以上大きくなりません。画面の端から端まで使うレイアウトは元の大きさのままです。': 'Memperbesar atau memperkecil lirik dengan pemisah baris, posisi, dan gerakan tetap sama (pita dan bingkai yang digambar bersama teks ikut berubah). Saat diperbesar, baris berhenti tepat sebelum tepi layar, jadi baris yang sudah memenuhi layar tidak bertambah besar. Tata letak yang membentang dari tepi ke tepi layar tetap pada ukuran aslinya.',
     '写真・画像（文字はそのまま）': 'Foto / gambar (lirik tetap)',
     '背景の画像を選ぶ': 'Pilih gambar latar',
     '画像を外す': 'Hapus gambar',

@@ -1,6 +1,9 @@
 """English copy for the browser edition. The Japanese source stays authoritative."""
 
 BODY = {
+    '文字の大きさ': 'Text size',
+    '標準に戻す': 'Reset',
+    '歌詞の文字を、改行・配置・動きはそのままに大きく／小さくします（文字と一緒に描かれる帯や枠も合わせて変わります）。大きくするときは画面の端の手前で止まるので、もともと画面いっぱいの行はそれ以上大きくなりません。画面の端から端まで使うレイアウトは元の大きさのままです。': 'Makes the lyrics larger or smaller while line breaks, placement and motion stay exactly the same (bands and frames drawn with the text scale with it). When enlarging, a line stops just short of the frame edge, so lines that already fill the screen do not get any bigger. Layouts that run from one edge of the frame to the other keep their original size.',
     '写真・画像（文字はそのまま）': 'Photo / image (lyrics unchanged)',
     '背景の画像を選ぶ': 'Choose background image',
     '画像を外す': 'Remove image',

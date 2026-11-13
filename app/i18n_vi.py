@@ -42,6 +42,9 @@ STYLES = {
 }
 
 BODY = {
+    '文字の大きさ': 'Cỡ chữ',
+    '標準に戻す': 'Mặc định',
+    '歌詞の文字を、改行・配置・動きはそのままに大きく／小さくします（文字と一緒に描かれる帯や枠も合わせて変わります）。大きくするときは画面の端の手前で止まるので、もともと画面いっぱいの行はそれ以上大きくなりません。画面の端から端まで使うレイアウトは元の大きさのままです。': 'Phóng to hoặc thu nhỏ lời bài hát mà vẫn giữ nguyên ngắt dòng, vị trí và chuyển động (dải và khung vẽ cùng chữ cũng thay đổi theo). Khi phóng to, dòng sẽ dừng ngay trước mép khung hình, nên dòng vốn đã đầy màn hình sẽ không to thêm. Bố cục trải từ mép này sang mép kia của khung hình giữ nguyên kích thước gốc.',
     '写真・画像（文字はそのまま）': 'Ảnh / hình (giữ nguyên chữ)',
     '背景の画像を選ぶ': 'Chọn ảnh nền',
     '画像を外す': 'Bỏ ảnh',

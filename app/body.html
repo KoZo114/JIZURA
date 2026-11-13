@@ -195,6 +195,10 @@
             <label class="field bgimg-dim-field">文字を読みやすくする（画像の上に背景色を重ねる濃さ）<input class="bgimg-dim" type="range" min="0" max="90" step="5" aria-label="画像の上に背景色を重ねる濃さ"></label>
             <p class="note">写真や画像を背景にして、その上で文字と演出をいつも通り動かします（スタイルの背景の模様は入りません）。プレビュー・MP4・連番PNGに入ります。画像はプロジェクトファイルには保存されないので、開き直したときは選び直してください。</p>
           </div>
+          <div class="tsize-row">
+            <div class="row"><label class="tsize-field">文字の大きさ<input class="tsize" type="range" min="50" max="150" step="5" value="100" aria-label="文字の大きさ"></label><span class="tsize-val mono">100%</span><button class="tsize-reset ghost small" hidden>標準に戻す</button></div>
+            <p class="note">歌詞の文字を、改行・配置・動きはそのままに大きく／小さくします（文字と一緒に描かれる帯や枠も合わせて変わります）。大きくするときは画面の端の手前で止まるので、もともと画面いっぱいの行はそれ以上大きくなりません。画面の端から端まで使うレイアウトは元の大きさのままです。</p>
+          </div>
           <label class="check center-free"><input id="eCenter" class="center-toggle" type="checkbox"><span>中央を空ける（キャラクター用）<small>中央にキャラクターなどを重ねる前提で、文字と演出を横長の画面では左右、縦長の画面では上下に、行ごとに交互に置きます。背景と画面効果は全体のままです（プレビューには空ける範囲を点線で表示）</small></span></label>
           <label class="row center-dir" hidden>縦長のとき<select class="centerDirSel" aria-label="縦長の画面での分け方"><option value="tb">上下に分ける</option><option value="lr">左右に分ける</option></select></label>
           <div class="rng-row"><span class="rng-lab">書き出す範囲</span><select class="rngFrom" aria-label="書き出す範囲の最初の行"></select><span class="muted">〜</span><select class="rngTo" aria-label="書き出す範囲の最後の行"></select><span class="rngInfo muted mono"></span></div>
@@ -233,6 +237,11 @@
         <h3>背景・文字色</h3>
         <label class="check"><input id="colorOn" type="checkbox"><span>メインの背景と文字を自分の色にする</span></label>
         <div class="color-row" id="colorRow"></div>
+        <h3>文字の大きさ</h3>
+        <div class="tsize-row">
+          <div class="row"><label class="tsize-field">文字の大きさ<input class="tsize" type="range" min="50" max="150" step="5" value="100" aria-label="文字の大きさ"></label><span class="tsize-val mono">100%</span><button class="tsize-reset ghost small" hidden>標準に戻す</button></div>
+          <p class="note">歌詞の文字を、改行・配置・動きはそのままに大きく／小さくします（文字と一緒に描かれる帯や枠も合わせて変わります）。大きくするときは画面の端の手前で止まるので、もともと画面いっぱいの行はそれ以上大きくなりません。画面の端から端まで使うレイアウトは元の大きさのままです。</p>
+        </div>
       </div>
 
       <div class="tabpane" data-pane="fx" hidden>
