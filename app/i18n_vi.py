@@ -42,7 +42,12 @@ STYLES = {
 }
 
 BODY = {
-    '<a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a>': '<a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Xóa nền ảnh nhân vật (trang riêng, giao diện tiếng Nhật)</a>',
+    '写真・画像（文字はそのまま）': 'Ảnh / hình (giữ nguyên chữ)',
+    '背景の画像を選ぶ': 'Chọn ảnh nền',
+    '画像を外す': 'Bỏ ảnh',
+    '文字を読みやすくする（画像の上に背景色を重ねる濃さ）': 'Dễ đọc chữ hơn (độ đậm màu nền phủ lên ảnh)',
+    '画像の上に背景色を重ねる濃さ': 'Độ đậm màu nền phủ lên ảnh',
+    '写真や画像を背景にして、その上で文字と演出をいつも通り動かします（スタイルの背景の模様は入りません）。プレビュー・MP4・連番PNGに入ります。画像はプロジェクトファイルには保存されないので、開き直したときは選び直してください。': 'Dùng ảnh hoặc hình làm nền; chữ và hiệu ứng vẫn chuyển động như thường ở phía trên (không có họa tiết nền của phong cách). Có trong bản xem trước, MP4 và chuỗi PNG. Ảnh không được lưu trong tệp dự án, nên hãy chọn lại sau khi mở lại.',
     '文字PV系の部品を使う': 'Dùng các thành phần kiểu chữ',
     'キネティックの部品を使う': 'Dùng các thành phần chuyển động chữ',
     'ホラーの演出も使う': 'Dùng cả hiệu ứng kinh dị',
@@ -252,6 +257,10 @@ BODY = {
 }
 
 UI = {
+    '画像が選ばれていません': 'Chưa chọn ảnh',
+    '背景：写真・画像（文字と演出はそのまま）': 'Nền: ảnh / hình (giữ nguyên chữ và hiệu ứng)',
+    'この画像は読み込めませんでした': 'Không thể tải ảnh này',
+    '背景の画像を外しました': 'Đã bỏ ảnh nền',
     'おまかせ': 'Ngẫu nhiên', 'シャッフル': 'Sắp xếp ngẫu nhiên',
     "'文字PV系の部品：使う'": "'Thành phần kiểu chữ: bật'",
     "'文字PV系の部品：使わない（おまかせ・シャッフルで選ばれません）'": "'Thành phần kiểu chữ: tắt (Ngẫu nhiên và Sắp xếp ngẫu nhiên sẽ không chọn)'",

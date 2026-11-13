@@ -41,7 +41,12 @@ STYLES = {
 }
 
 BODY = {
-    '<a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a>': '<a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Hapus latar gambar karakter (halaman terpisah, berbahasa Jepang)</a>',
+    '写真・画像（文字はそのまま）': 'Foto / gambar (lirik tetap)',
+    '背景の画像を選ぶ': 'Pilih gambar latar',
+    '画像を外す': 'Hapus gambar',
+    '文字を読みやすくする（画像の上に背景色を重ねる濃さ）': 'Keterbacaan (warna latar di atas gambar)',
+    '画像の上に背景色を重ねる濃さ': 'Warna latar di atas gambar',
+    '写真や画像を背景にして、その上で文字と演出をいつも通り動かします（スタイルの背景の模様は入りません）。プレビュー・MP4・連番PNGに入ります。画像はプロジェクトファイルには保存されないので、開き直したときは選び直してください。': 'Gunakan foto atau gambar sebagai latar; lirik dan efek tetap bergerak seperti biasa di atasnya (pola latar gaya tidak dipakai). Ikut masuk ke pratinjau, MP4, dan PNG berurutan. Gambar tidak disimpan di file proyek, jadi pilih lagi setelah membuka ulang.',
     '文字PV系の部品を使う': 'Pakai bagian tipografi',
     'キネティックの部品を使う': 'Pakai bagian kinetik',
     'ホラーの演出も使う': 'Sertakan efek horor',
@@ -194,6 +199,10 @@ BODY = {
 }
 
 UI = {
+    '画像が選ばれていません': 'Belum ada gambar',
+    '背景：写真・画像（文字と演出はそのまま）': 'Latar: foto / gambar (lirik dan efek tetap)',
+    'この画像は読み込めませんでした': 'Gambar ini tidak bisa dimuat',
+    '背景の画像を外しました': 'Gambar latar dihapus',
     "'文字PV系の部品：使う'": "'Bagian tipografi: aktif'",
     "'文字PV系の部品：使わない（おまかせ・シャッフルで選ばれません）'": "'Bagian tipografi: nonaktif (tidak dipilih oleh Acak atau Kocok)'",
     "'キネティックの部品：使う'": "'Bagian kinetik: aktif'",

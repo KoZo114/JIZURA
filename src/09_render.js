@@ -75,7 +75,19 @@ class Renderer {
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
     // ---------- background ----------
     const key = plan.keyBg && J.KEY_BG && J.KEY_BG[plan.keyBg] ? plan.keyBg : null;   // 合成用: white-on-black, finished in keyFinish()
+    // 写真・画像: the user's picture replaces the style's background (and the per-line background graphic);
+    // the lyrics, decorations and screen effects are drawn on top unchanged
+    const photo = !key && !opt.transparent && plan.photoBg && J.userBg && J.userBg.img ? J.userBg : null;
     if (key && !opt.transparent) { ctx.fillStyle = '#000000'; ctx.fillRect(0, 0, W, H); }
+    else if (photo) {
+      const img = photo.img, iw = img.width, ih = img.height, k = Math.max(W / iw, H / ih);
+      ctx.fillStyle = sc.bg; ctx.fillRect(0, 0, W, H);
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, (W - iw * k) / 2, (H - ih * k) / 2, iw * k, ih * k);
+      // lay the scheme's background colour over the picture so the scheme's text colours stay readable
+      const dim = J.clamp(+photo.dim || 0, 0, 0.9);
+      if (dim > 0) { ctx.globalAlpha = dim; ctx.fillStyle = sc.bg; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
+    }
     else if (!opt.transparent) {
       ctx.fillStyle = sc.bg; ctx.fillRect(0, 0, W, H);
       const g = ctx.createRadialGradient(W / 2, H * 0.45, 0, W / 2, H / 2, Math.hypot(W, H) * 0.6);
@@ -112,7 +124,7 @@ class Renderer {
     // ---------- background graphic (per line) ----------
     // 透過PNG 前景／後景 (opt.layer): 'back' = background graphic + the decorations behind the lyrics, 'front' = the rest
     const layer = opt.transparent ? opt.layer || null : null;
-    if ((!opt.transparent || layer === 'back') && !key && mainCut && mainCut.bg && mainCut.bg !== 'none' && J.BG[mainCut.bg]) {
+    if ((!opt.transparent || layer === 'back') && !key && !photo && mainCut && mainCut.bg && mainCut.bg !== 'none' && J.BG[mainCut.bg]) {
       const env = this.makeEnv(ctx, plan, mainCut, sc, { pass: 'main', t: tq, lt: tq - mainCut.start, ltb: tq - mainCut.start, step, scale, allowFilter, energy, beat: beatInfo, bgOnly: true });
       ctx.save();
       try { J.BG[mainCut.bg].draw(env, mainCut.bgP || {}); } catch (e) { console.warn('bg', mainCut.bg, e); }

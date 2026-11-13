@@ -75,6 +75,10 @@ button.icon svg { width: 15px; height: 15px; }
 label.file { position: relative; display: inline-flex; align-items: center; gap: 6px; background: var(--raised); border: 1px dashed var(--line2); border-radius: var(--r); padding: 6px 12px; cursor: pointer; }
 label.file:hover { border-color: var(--amber); }
 label.file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.bgimg-row { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.bgimg-row .bgimg-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
+.bgimg-row input[type=range] { width: 100%; }
+.bgimg-row .note { margin-top: 0; }
 .muted { color: var(--muted); }
 .mono { font-family: var(--mono); }
 h2, h3 { margin: 0; font-weight: 600; }
@@ -435,6 +439,3 @@ button.small.primary { padding: 4px 12px; }
 #app.is-mobile .transport input[type=range] { flex: 1 1 40px; min-width: 0; }
 #app.is-mobile .transport .hist-btns button { min-width: 36px; padding: 4px 8px; }
 #app.is-mobile button.play { flex: none; width: 44px; }
-.bgrm-note { margin: 6px 0 0; font-size: 12px; }
-.bgrm-note a { color: var(--cyan); }
-.bgrm-note a:hover { color: var(--text); }

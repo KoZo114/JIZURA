@@ -98,6 +98,10 @@ button.icon svg { width: 15px; height: 15px; }
 label.file { position: relative; display: inline-flex; align-items: center; gap: 6px; background: var(--raised); border: 1px dashed var(--line2); border-radius: var(--r); padding: 6px 12px; cursor: pointer; }
 label.file:hover { border-color: var(--amber); }
 label.file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.bgimg-row { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.bgimg-row .bgimg-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
+.bgimg-row input[type=range] { width: 100%; }
+.bgimg-row .note { margin-top: 0; }
 .muted { color: var(--muted); }
 .mono { font-family: var(--mono); }
 h2, h3 { margin: 0; font-weight: 600; }
@@ -458,9 +462,6 @@ button.small.primary { padding: 4px 12px; }
 #app.is-mobile .transport input[type=range] { flex: 1 1 40px; min-width: 0; }
 #app.is-mobile .transport .hist-btns button { min-width: 36px; padding: 4px 8px; }
 #app.is-mobile button.play { flex: none; width: 44px; }
-.bgrm-note { margin: 6px 0 0; font-size: 12px; }
-.bgrm-note a { color: var(--cyan); }
-.bgrm-note a:hover { color: var(--text); }
 
 </style>
 </head>
@@ -656,11 +657,15 @@ button.small.primary { padding: 4px 12px; }
             <label class="field">画面比<select id="eAspect"><option value="16:9">16:9</option><option value="9:16">9:16 縦</option><option value="4:3">4:3</option><option value="3:4">3:4 縦</option><option value="1:1">1:1</option><option value="4:5">4:5 縦</option><option value="21:9">21:9</option></select></label>
             <label class="field">解像度<select id="eRes"><option value="720">720p</option><option value="1080">1080p</option><option value="1440">1440p</option><option value="2160">4K</option></select></label>
             <label class="field">fps<select id="eFps"><option>24</option><option>30</option><option>60</option></select></label>
-            <label class="field field-wide">背景<select id="eKey"><option value="off">通常（スタイルの背景）</option><option value="green">グリーンバック（合成用）</option><option value="black">ブラックバック（合成用）</option></select></label>
+            <label class="field field-wide">背景<select id="eKey"><option value="off">通常（スタイルの背景）</option><option value="image">写真・画像（文字はそのまま）</option><option value="green">グリーンバック（合成用）</option><option value="black">ブラックバック（合成用）</option></select></label>
+          </div>
+          <div class="bgimg-row" hidden>
+            <div class="row"><label class="file">背景の画像を選ぶ<input class="bgimg-file" type="file" accept="image/*"></label><button class="bgimg-clear ghost small" hidden>画像を外す</button><span class="bgimg-name muted"></span></div>
+            <label class="field bgimg-dim-field">文字を読みやすくする（画像の上に背景色を重ねる濃さ）<input class="bgimg-dim" type="range" min="0" max="90" step="5" aria-label="画像の上に背景色を重ねる濃さ"></label>
+            <p class="note">写真や画像を背景にして、その上で文字と演出をいつも通り動かします（スタイルの背景の模様は入りません）。プレビュー・MP4・連番PNGに入ります。画像はプロジェクトファイルには保存されないので、開き直したときは選び直してください。</p>
           </div>
           <label class="check center-free"><input id="eCenter" class="center-toggle" type="checkbox"><span>中央を空ける（キャラクター用）<small>中央にキャラクターなどを重ねる前提で、文字と演出を横長の画面では左右、縦長の画面では上下に、行ごとに交互に置きます。背景と画面効果は全体のままです（プレビューには空ける範囲を点線で表示）</small></span></label>
           <label class="row center-dir" hidden>縦長のとき<select class="centerDirSel" aria-label="縦長の画面での分け方"><option value="tb">上下に分ける</option><option value="lr">左右に分ける</option></select></label>
-          <p class="bgrm-note"><a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a></p>
           <div class="rng-row"><span class="rng-lab">書き出す範囲</span><select class="rngFrom" aria-label="書き出す範囲の最初の行"></select><span class="muted">〜</span><select class="rngTo" aria-label="書き出す範囲の最後の行"></select><span class="rngInfo muted mono"></span></div>
           <div class="outbtns"><button id="eMP4" class="primary">MP4 を書き出す</button><button id="eMP4File" class="ghost mp4file" hidden title="保存先のファイルを先に選び、そこへ直接書き込みます。長い曲・1080p 以上でブラウザのメモリが足りずに失敗するときに使ってください（Chrome / Edge）">大きな動画用（ファイルに直接保存）</button></div>
           <button class="terms-open linkish">書き出した動画の権利について</button>
@@ -736,12 +741,16 @@ button.small.primary { padding: 4px 12px; }
           <label class="field">解像度<select id="outRes"><option value="720">720p</option><option value="1080">1080p</option><option value="1440">1440p</option><option value="2160">4K</option></select></label>
           <label class="field">fps<select id="outFps"><option>24</option><option>30</option><option>60</option></select></label>
           <label class="field">画質<select id="outQuality"><option value="standard">標準</option><option value="high">高</option><option value="max">最高</option></select></label>
-          <label class="field field-wide">背景<select id="outKey"><option value="off">通常（スタイルの背景）</option><option value="green">グリーンバック（合成用）</option><option value="black">ブラックバック（合成用）</option></select></label>
+          <label class="field field-wide">背景<select id="outKey"><option value="off">通常（スタイルの背景）</option><option value="image">写真・画像（文字はそのまま）</option><option value="green">グリーンバック（合成用）</option><option value="black">ブラックバック（合成用）</option></select></label>
+        </div>
+        <div class="bgimg-row" hidden>
+          <div class="row"><label class="file">背景の画像を選ぶ<input class="bgimg-file" type="file" accept="image/*"></label><button class="bgimg-clear ghost small" hidden>画像を外す</button><span class="bgimg-name muted"></span></div>
+          <label class="field bgimg-dim-field">文字を読みやすくする（画像の上に背景色を重ねる濃さ）<input class="bgimg-dim" type="range" min="0" max="90" step="5" aria-label="画像の上に背景色を重ねる濃さ"></label>
+          <p class="note">写真や画像を背景にして、その上で文字と演出をいつも通り動かします（スタイルの背景の模様は入りません）。プレビュー・MP4・連番PNGに入ります。画像はプロジェクトファイルには保存されないので、開き直したときは選び直してください。</p>
         </div>
         <p class="note key-note">グリーンバック／ブラックバックにすると、白い文字と演出だけを単色の背景の上に描きます（背景の模様・紙の質感・粒子・周辺減光は入りません）。プレビューにもそのまま反映されます。グリーンバックは動画編集ソフトのクロマキーで、ブラックバックは「スクリーン」合成や輝度キーで抜いて、別の映像の上に重ねられます。</p>
         <label class="check center-free"><input id="outCenter" class="center-toggle" type="checkbox"><span>中央を空ける（キャラクター用）<small>中央にキャラクターなどを重ねる前提で、文字と演出を横長の画面では左右、縦長の画面では上下に、行ごとに交互に置きます。背景と画面効果は全体のままです（プレビューには空ける範囲を点線で表示）</small></span></label>
           <label class="row center-dir" hidden>縦長のとき<select class="centerDirSel" aria-label="縦長の画面での分け方"><option value="tb">上下に分ける</option><option value="lr">左右に分ける</option></select></label>
-          <p class="bgrm-note"><a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a></p>
         <label class="row" style="gap:6px;margin-top:10px"><input id="outAudio" type="checkbox" checked> 曲を動画に含める</label>
         <div class="rng-row"><span class="rng-lab">書き出す範囲</span><select class="rngFrom" aria-label="書き出す範囲の最初の行"></select><span class="muted">〜</span><select class="rngTo" aria-label="書き出す範囲の最後の行"></select><span class="rngInfo muted mono"></span></div>
         <div class="outbtns">
@@ -3433,7 +3442,8 @@ J.defaultProject = () => ({
   typo: true,                     // 文字PV系 typographic parts
   kinetic: true,                  // キネティック parts
   lang: 'auto',                   // 歌詞の言語: 'auto' | 'ja' | 'zh-Hant' | 'zh-Hans' | 'ko' — picks the faces each font key is drawn with
-  keyBg: 'off',                   // 合成用の背景: 'off' | 'green' (グリーンバック) | 'black' (ブラックバック)
+  keyBg: 'off',                   // 背景: 'off' | 'image' (写真・画像の上に文字) | 'green' (グリーンバック) | 'black' (ブラックバック)
+  bgDim: 0.3,                     // 写真・画像: how much of the scheme's background colour is laid over the picture (0–0.9)
   unify: false,                   // 統一感: part palettes, repeats shown the same way, キメ, モーフ, 太さ
   typeset: false,                 // 文字整列: kana tracking, small particles / big first character, Latin sizing, 0.2 s lead, restraint
   centerDir: 'tb',                // 中央を空ける on tall frames: 'tb' = top / bottom, 'lr' = left / right
@@ -3654,6 +3664,7 @@ J.plan = (project, audio) => {
     lines: [], cuts: [], events: [], beats: audio && audio.beats ? audio.beats.slice() : [],
     hud: fx.hud === 'on' ? true : fx.hud === 'off' ? false : !!st.hud,
     keyBg: J.keyMode ? J.keyMode(project) : null,   // 'green' | 'black' | null — 合成用の背景
+    photoBg: project.keyBg === 'image',             // 写真・画像: the picture itself lives in J.userBg (not in the plan / project file)
     centerFree: !!zones, zones,
     typeset: !!project.typeset, unify: !!project.unify,
     lang: J.resolveLang ? J.resolveLang(project) : 'ja',   // 歌詞の言語 (auto → detected)
@@ -4576,7 +4587,19 @@ class Renderer {
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
     // ---------- background ----------
     const key = plan.keyBg && J.KEY_BG && J.KEY_BG[plan.keyBg] ? plan.keyBg : null;   // 合成用: white-on-black, finished in keyFinish()
+    // 写真・画像: the user's picture replaces the style's background (and the per-line background graphic);
+    // the lyrics, decorations and screen effects are drawn on top unchanged
+    const photo = !key && !opt.transparent && plan.photoBg && J.userBg && J.userBg.img ? J.userBg : null;
     if (key && !opt.transparent) { ctx.fillStyle = '#000000'; ctx.fillRect(0, 0, W, H); }
+    else if (photo) {
+      const img = photo.img, iw = img.width, ih = img.height, k = Math.max(W / iw, H / ih);
+      ctx.fillStyle = sc.bg; ctx.fillRect(0, 0, W, H);
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, (W - iw * k) / 2, (H - ih * k) / 2, iw * k, ih * k);
+      // lay the scheme's background colour over the picture so the scheme's text colours stay readable
+      const dim = J.clamp(+photo.dim || 0, 0, 0.9);
+      if (dim > 0) { ctx.globalAlpha = dim; ctx.fillStyle = sc.bg; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
+    }
     else if (!opt.transparent) {
       ctx.fillStyle = sc.bg; ctx.fillRect(0, 0, W, H);
       const g = ctx.createRadialGradient(W / 2, H * 0.45, 0, W / 2, H / 2, Math.hypot(W, H) * 0.6);
@@ -4613,7 +4636,7 @@ class Renderer {
     // ---------- background graphic (per line) ----------
     // 透過PNG 前景／後景 (opt.layer): 'back' = background graphic + the decorations behind the lyrics, 'front' = the rest
     const layer = opt.transparent ? opt.layer || null : null;
-    if ((!opt.transparent || layer === 'back') && !key && mainCut && mainCut.bg && mainCut.bg !== 'none' && J.BG[mainCut.bg]) {
+    if ((!opt.transparent || layer === 'back') && !key && !photo && mainCut && mainCut.bg && mainCut.bg !== 'none' && J.BG[mainCut.bg]) {
       const env = this.makeEnv(ctx, plan, mainCut, sc, { pass: 'main', t: tq, lt: tq - mainCut.start, ltb: tq - mainCut.start, step, scale, allowFilter, energy, beat: beatInfo, bgOnly: true });
       ctx.save();
       try { J.BG[mainCut.bg].draw(env, mainCut.bgP || {}); } catch (e) { console.warn('bg', mainCut.bg, e); }
@@ -35997,6 +36020,8 @@ function mergeProject(p) {
   for (const [g, on] of Object.entries((p && p.locks && p.locks.tech) || {})) if (on === true && /^[\w-]+$/.test(g)) o.locks.tech[g] = true;
   for (const [k, on] of Object.entries((p && p.locks && p.locks.params) || {})) if (on === true && /^[\w-]+$/.test(k)) o.locks.params[k] = true;
   delete o.appVersion;
+  if (!['off', 'image', 'green', 'black'].includes(o.keyBg)) o.keyBg = 'off';
+  o.bgDim = J.clamp(Number.isFinite(+o.bgDim) ? +o.bgDim : 0.3, 0, 0.9);
   // project files are untrusted: colours must be colours, font keys plain keys (they end up in the page's HTML / CSS)
   o.colors = { enabled: !!(p && p.colors && p.colors.enabled) };
   for (const [k, v] of Object.entries((p && p.colors) || {})) {
@@ -37281,6 +37306,37 @@ function syncOut() {
   const kb = $('keyBadge');
   kb.hidden = k === 'off';
   if (k !== 'off') kb.innerHTML = `<i style="background:${J.KEY_BG[k]}"></i>${k === 'green' ? 'グリーンバック' : 'ブラックバック'}`;
+  syncBgImage();
+}
+/* 背景：写真・画像 — the picture is kept in memory only (J.userBg); its strength is saved with the project */
+function syncBgImage() {
+  const on = S.project.keyBg === 'image', img = J.userBg && J.userBg.img;
+  if (!J.userBg) J.userBg = { img: null, name: '', dim: 0.3 };
+  J.userBg.dim = J.clamp(Number.isFinite(+S.project.bgDim) ? +S.project.bgDim : 0.3, 0, 0.9);
+  if (on) $('outKey').value = $('eKey').value = 'image';
+  document.querySelectorAll('.bgimg-row').forEach(el => { el.hidden = !on; });
+  document.querySelectorAll('.bgimg-clear').forEach(el => { el.hidden = !img; });
+  document.querySelectorAll('.bgimg-name').forEach(el => { el.textContent = img ? J.userBg.name : '画像が選ばれていません'; });
+  document.querySelectorAll('.bgimg-dim').forEach(el => { el.value = String(Math.round(J.userBg.dim * 100)); });
+}
+async function loadBgImage(file) {
+  if (!file) return;
+  try {
+    const bmp = await createImageBitmap(file);
+    // keep at most 4K on the long side: enough for every output size, light enough to redraw every frame
+    const k = Math.min(1, 3840 / Math.max(bmp.width, bmp.height));
+    const c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(bmp.width * k)); c.height = Math.max(1, Math.round(bmp.height * k));
+    const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(bmp, 0, 0, c.width, c.height);
+    if (bmp.close) bmp.close();
+    J.userBg = { img: c, name: String(file.name || '').slice(0, 80), dim: J.userBg ? J.userBg.dim : 0.3 };
+    if (S.project.keyBg !== 'image') { S.project.keyBg = 'image'; syncOut(); replan(); flushSave(); }
+    else { syncBgImage(); S.need = true; }
+    toast('背景：写真・画像（文字と演出はそのまま）');
+  } catch (e) {
+    console.warn('bg image', e);
+    toast('この画像は読み込めませんでした');
+  }
 }
 // the codec check is slow in some browsers: at start-up, let the first preview frames paint before asking
 function codecNoteSoon() { (window.requestIdleCallback || (f => setTimeout(f, 400)))(() => codecNote(), { timeout: 1500 }); }
@@ -37560,9 +37616,21 @@ function bind() {
   ['outKey', 'eKey'].forEach(id => $(id).addEventListener('change', e => {
     S.project.keyBg = e.target.value; syncOut(); replan(); flushSave();
     const k = J.keyMode(S.project);
+    if (e.target.value === 'image') {
+      if (!(J.userBg && J.userBg.img)) { const box = e.target.closest('.easy-sec, .tabpane'), f = box && box.querySelector('.bgimg-file'); if (f) f.click(); }
+      toast('背景：写真・画像（文字と演出はそのまま）'); return;
+    }
     toast(k ? `背景：${k === 'green' ? 'グリーンバック' : 'ブラックバック'}（白い文字と演出だけ）` : '背景：通常（スタイルの配色）');
   }));
   $('outAudio').addEventListener('change', e => { S.project.includeAudio = e.target.checked; autosave(); });
+  document.querySelectorAll('.bgimg-file').forEach(el => el.addEventListener('change', e => { loadBgImage(e.target.files && e.target.files[0]); e.target.value = ''; }));
+  document.querySelectorAll('.bgimg-clear').forEach(el => el.addEventListener('click', () => {
+    if (J.userBg) { J.userBg.img = null; J.userBg.name = ''; }
+    syncBgImage(); S.need = true; toast('背景の画像を外しました');
+  }));
+  document.querySelectorAll('.bgimg-dim').forEach(el => el.addEventListener('input', e => {
+    S.project.bgDim = J.clamp(+e.target.value / 100, 0, 0.9); syncBgImage(); S.need = true; autosave();
+  }));
   document.querySelectorAll('.centerDirSel').forEach(el => el.addEventListener('change', e => {
     S.project.centerDir = e.target.value; syncOut(); replan(); flushSave();
     toast(e.target.value === 'lr' ? '縦長の画面：左右に分けます' : '縦長の画面：上下に分けます');
