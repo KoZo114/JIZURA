@@ -1,6 +1,12 @@
 """English copy for the browser edition. The Japanese source stays authoritative."""
 
 BODY = {
+    '写真・画像（文字はそのまま）': 'Photo / image (lyrics unchanged)',
+    '背景の画像を選ぶ': 'Choose background image',
+    '画像を外す': 'Remove image',
+    '文字を読みやすくする（画像の上に背景色を重ねる濃さ）': 'Readability (background colour laid over the image)',
+    '画像の上に背景色を重ねる濃さ': 'Background colour over the image',
+    '写真や画像を背景にして、その上で文字と演出をいつも通り動かします（スタイルの背景の模様は入りません）。プレビュー・MP4・連番PNGに入ります。画像はプロジェクトファイルには保存されないので、開き直したときは選び直してください。': "Use a photo or image as the background; the lyrics and effects move over it as usual (the style's background pattern is left out). It is included in the preview, MP4 and PNG sequence. The image is not saved in the project file, so choose it again after reopening.",
     '文字PV系の部品を使う': 'Use typographic parts',
     'キネティックの部品を使う': 'Use kinetic parts',
     'ホラーの演出も使う': 'Include horror effects',
@@ -174,6 +180,10 @@ BODY = {
 }
 
 UI = {
+    '画像が選ばれていません': 'No image chosen',
+    '背景：写真・画像（文字と演出はそのまま）': 'Background: photo / image (lyrics and effects unchanged)',
+    'この画像は読み込めませんでした': 'This image could not be loaded',
+    '背景の画像を外しました': 'Background image removed',
     "'文字PV系の部品：使う'": "'Typographic parts: on'",
     "'文字PV系の部品：使わない（おまかせ・シャッフルで選ばれません）'": "'Typographic parts: off (not picked by Randomize or Shuffle)'",
     "'キネティックの部品：使う'": "'Kinetic parts: on'",

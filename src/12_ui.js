@@ -113,6 +113,8 @@ function mergeProject(p) {
   for (const [g, on] of Object.entries((p && p.locks && p.locks.tech) || {})) if (on === true && /^[\w-]+$/.test(g)) o.locks.tech[g] = true;
   for (const [k, on] of Object.entries((p && p.locks && p.locks.params) || {})) if (on === true && /^[\w-]+$/.test(k)) o.locks.params[k] = true;
   delete o.appVersion;
+  if (!['off', 'image', 'green', 'black'].includes(o.keyBg)) o.keyBg = 'off';
+  o.bgDim = J.clamp(Number.isFinite(+o.bgDim) ? +o.bgDim : 0.3, 0, 0.9);
   // project files are untrusted: colours must be colours, font keys plain keys (they end up in the page's HTML / CSS)
   o.colors = { enabled: !!(p && p.colors && p.colors.enabled) };
   for (const [k, v] of Object.entries((p && p.colors) || {})) {
@@ -1397,6 +1399,37 @@ function syncOut() {
   const kb = $('keyBadge');
   kb.hidden = k === 'off';
   if (k !== 'off') kb.innerHTML = `<i style="background:${J.KEY_BG[k]}"></i>${k === 'green' ? 'グリーンバック' : 'ブラックバック'}`;
+  syncBgImage();
+}
+/* 背景：写真・画像 — the picture is kept in memory only (J.userBg); its strength is saved with the project */
+function syncBgImage() {
+  const on = S.project.keyBg === 'image', img = J.userBg && J.userBg.img;
+  if (!J.userBg) J.userBg = { img: null, name: '', dim: 0.3 };
+  J.userBg.dim = J.clamp(Number.isFinite(+S.project.bgDim) ? +S.project.bgDim : 0.3, 0, 0.9);
+  if (on) $('outKey').value = $('eKey').value = 'image';
+  document.querySelectorAll('.bgimg-row').forEach(el => { el.hidden = !on; });
+  document.querySelectorAll('.bgimg-clear').forEach(el => { el.hidden = !img; });
+  document.querySelectorAll('.bgimg-name').forEach(el => { el.textContent = img ? J.userBg.name : '画像が選ばれていません'; });
+  document.querySelectorAll('.bgimg-dim').forEach(el => { el.value = String(Math.round(J.userBg.dim * 100)); });
+}
+async function loadBgImage(file) {
+  if (!file) return;
+  try {
+    const bmp = await createImageBitmap(file);
+    // keep at most 4K on the long side: enough for every output size, light enough to redraw every frame
+    const k = Math.min(1, 3840 / Math.max(bmp.width, bmp.height));
+    const c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(bmp.width * k)); c.height = Math.max(1, Math.round(bmp.height * k));
+    const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(bmp, 0, 0, c.width, c.height);
+    if (bmp.close) bmp.close();
+    J.userBg = { img: c, name: String(file.name || '').slice(0, 80), dim: J.userBg ? J.userBg.dim : 0.3 };
+    if (S.project.keyBg !== 'image') { S.project.keyBg = 'image'; syncOut(); replan(); flushSave(); }
+    else { syncBgImage(); S.need = true; }
+    toast('背景：写真・画像（文字と演出はそのまま）');
+  } catch (e) {
+    console.warn('bg image', e);
+    toast('この画像は読み込めませんでした');
+  }
 }
 // the codec check is slow in some browsers: at start-up, let the first preview frames paint before asking
 function codecNoteSoon() { (window.requestIdleCallback || (f => setTimeout(f, 400)))(() => codecNote(), { timeout: 1500 }); }
@@ -1676,9 +1709,21 @@ function bind() {
   ['outKey', 'eKey'].forEach(id => $(id).addEventListener('change', e => {
     S.project.keyBg = e.target.value; syncOut(); replan(); flushSave();
     const k = J.keyMode(S.project);
+    if (e.target.value === 'image') {
+      if (!(J.userBg && J.userBg.img)) { const box = e.target.closest('.easy-sec, .tabpane'), f = box && box.querySelector('.bgimg-file'); if (f) f.click(); }
+      toast('背景：写真・画像（文字と演出はそのまま）'); return;
+    }
     toast(k ? `背景：${k === 'green' ? 'グリーンバック' : 'ブラックバック'}（白い文字と演出だけ）` : '背景：通常（スタイルの配色）');
   }));
   $('outAudio').addEventListener('change', e => { S.project.includeAudio = e.target.checked; autosave(); });
+  document.querySelectorAll('.bgimg-file').forEach(el => el.addEventListener('change', e => { loadBgImage(e.target.files && e.target.files[0]); e.target.value = ''; }));
+  document.querySelectorAll('.bgimg-clear').forEach(el => el.addEventListener('click', () => {
+    if (J.userBg) { J.userBg.img = null; J.userBg.name = ''; }
+    syncBgImage(); S.need = true; toast('背景の画像を外しました');
+  }));
+  document.querySelectorAll('.bgimg-dim').forEach(el => el.addEventListener('input', e => {
+    S.project.bgDim = J.clamp(+e.target.value / 100, 0, 0.9); syncBgImage(); S.need = true; autosave();
+  }));
   document.querySelectorAll('.centerDirSel').forEach(el => el.addEventListener('change', e => {
     S.project.centerDir = e.target.value; syncOut(); replan(); flushSave();
     toast(e.target.value === 'lr' ? '縦長の画面：左右に分けます' : '縦長の画面：上下に分けます');
