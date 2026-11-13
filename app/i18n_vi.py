@@ -42,6 +42,7 @@ STYLES = {
 }
 
 BODY = {
+    '<a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a>': '<a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Xóa nền ảnh nhân vật (trang riêng, giao diện tiếng Nhật)</a>',
     '文字PV系の部品を使う': 'Dùng các thành phần kiểu chữ',
     'キネティックの部品を使う': 'Dùng các thành phần chuyển động chữ',
     'ホラーの演出も使う': 'Dùng cả hiệu ứng kinh dị',

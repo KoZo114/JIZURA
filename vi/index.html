@@ -458,6 +458,9 @@ button.small.primary { padding: 4px 12px; }
 #app.is-mobile .transport input[type=range] { flex: 1 1 40px; min-width: 0; }
 #app.is-mobile .transport .hist-btns button { min-width: 36px; padding: 4px 8px; }
 #app.is-mobile button.play { flex: none; width: 44px; }
+.bgrm-note { margin: 6px 0 0; font-size: 12px; }
+.bgrm-note a { color: var(--cyan); }
+.bgrm-note a:hover { color: var(--text); }
 
 </style>
 </head>
@@ -657,6 +660,7 @@ button.small.primary { padding: 4px 12px; }
           </div>
           <label class="check center-free"><input id="eCenter" class="center-toggle" type="checkbox"><span>Để trống giữa (cho nhân vật)<small>Để đặt nhân vật hoặc video khác ở giữa: chữ và hiệu ứng đặt trái / phải trên khung ngang và trên / dưới trên khung dọc, xen kẽ từng dòng. Nền và hiệu ứng màn hình vẫn phủ toàn khung (xem trước đánh dấu vùng trống bằng nét đứt)</small></span></label>
           <label class="row center-dir" hidden>Khi khung dọc<select class="centerDirSel" aria-label="Cách chia trên khung dọc"><option value="tb">Trên / dưới</option><option value="lr">Trái / phải</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Xóa nền ảnh nhân vật (trang riêng, giao diện tiếng Nhật)</a></p>
           <div class="rng-row"><span class="rng-lab">Xuất phạm vi</span><select class="rngFrom" aria-label="Hàng đầu tiên của phạm vi xuất"></select><span class="muted">〜</span><select class="rngTo" aria-label="Hàng cuối cùng của phạm vi xuất"></select><span class="rngInfo muted mono"></span></div>
           <div class="outbtns"><button id="eMP4" class="primary">Xuất MP4</button><button id="eMP4File" class="ghost mp4file" hidden title="Chọn tệp đích trước; video được ghi trực tiếp vào tệp đó. Chức năng này được sử dụng khi các bài hát dài hoặc 1080p trở lên không thành công do không đủ bộ nhớ trình duyệt (Chrome / Edge)">Đối với video lớn (lưu trực tiếp vào tệp)</button></div>
           <button class="terms-open linkish">Về quyền đối với video đã xuất</button>
@@ -737,6 +741,7 @@ button.small.primary { padding: 4px 12px; }
         <p class="note key-note">Màn hình màu xanh lá cây và nền đen chỉ hiển thị văn bản và hiệu ứng màu trắng trên nền màu đồng nhất, không có mẫu nền, họa tiết giấy, hạt hoặc họa tiết. Xem trước cũng tuân theo cài đặt này. Sử dụng khóa màu (chroma key) cho màn hình xanh hoặc chế độ kết hợp khóa Màn hình / luma cho nền đen để có thể xếp lớp lên trên các video khác.</p>
         <label class="check center-free"><input id="outCenter" class="center-toggle" type="checkbox"><span>Để trống giữa (cho nhân vật)<small>Để đặt nhân vật hoặc video khác ở giữa: chữ và hiệu ứng đặt trái / phải trên khung ngang và trên / dưới trên khung dọc, xen kẽ từng dòng. Nền và hiệu ứng màn hình vẫn phủ toàn khung (xem trước đánh dấu vùng trống bằng nét đứt)</small></span></label>
           <label class="row center-dir" hidden>Khi khung dọc<select class="centerDirSel" aria-label="Cách chia trên khung dọc"><option value="tb">Trên / dưới</option><option value="lr">Trái / phải</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Xóa nền ảnh nhân vật (trang riêng, giao diện tiếng Nhật)</a></p>
         <label class="row" style="gap:6px;margin-top:10px"><input id="outAudio" type="checkbox" checked> Đưa âm thanh vào video</label>
         <div class="rng-row"><span class="rng-lab">Xuất phạm vi</span><select class="rngFrom" aria-label="Hàng đầu tiên của phạm vi xuất"></select><span class="muted">〜</span><select class="rngTo" aria-label="Hàng cuối cùng của phạm vi xuất"></select><span class="rngInfo muted mono"></span></div>
         <div class="outbtns">

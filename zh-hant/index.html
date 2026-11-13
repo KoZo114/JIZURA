@@ -458,6 +458,9 @@ button.small.primary { padding: 4px 12px; }
 #app.is-mobile .transport input[type=range] { flex: 1 1 40px; min-width: 0; }
 #app.is-mobile .transport .hist-btns button { min-width: 36px; padding: 4px 8px; }
 #app.is-mobile button.play { flex: none; width: 44px; }
+.bgrm-note { margin: 6px 0 0; font-size: 12px; }
+.bgrm-note a { color: var(--cyan); }
+.bgrm-note a:hover { color: var(--text); }
 
 </style>
 </head>
@@ -657,6 +660,7 @@ button.small.primary { padding: 4px 12px; }
           </div>
           <label class="check center-free"><input id="eCenter" class="center-toggle" type="checkbox"><span>保留畫面中央（放角色用）<small>以在中央疊加角色等素材為前提，把文字與效果放在橫式畫面的左右、直式畫面的上下，並逐行交替。背景與畫面效果仍覆蓋整個畫面（預覽會以虛線標出保留的範圍）</small></span></label>
           <label class="row center-dir" hidden>直式畫面時<select class="centerDirSel" aria-label="直式畫面的分法"><option value="tb">分成上下</option><option value="lr">分成左右</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">去除角色圖片的背景（另開頁面，日文介面）</a></p>
           <div class="rng-row"><span class="rng-lab">匯出範圍</span><select class="rngFrom" aria-label="匯出範圍的第一行"></select><span class="muted">〜</span><select class="rngTo" aria-label="匯出範圍的最後一行"></select><span class="rngInfo muted mono"></span></div>
           <div class="outbtns"><button id="eMP4" class="primary">匯出 MP4</button><button id="eMP4File" class="ghost mp4file" hidden title="先選擇要儲存的檔案，直接寫入該檔案。長歌曲或 1080p 以上因瀏覽器記憶體不足而失敗時使用（Chrome / Edge）">大型影片用（直接存成檔案）</button></div>
           <button class="terms-open linkish">關於匯出影片的權利</button>
@@ -737,6 +741,7 @@ button.small.primary { padding: 4px 12px; }
         <p class="note key-note">選擇綠幕／黑底時，只會在單色背景上繪製白色文字與效果（不含背景圖樣、紙張質感、粒子與暗角），預覽也會同步呈現。綠幕可在影片剪輯軟體中用色度鍵去背，黑底可用「濾色」混合模式或亮度鍵去背，再疊到其他影片上。</p>
         <label class="check center-free"><input id="outCenter" class="center-toggle" type="checkbox"><span>保留畫面中央（放角色用）<small>以在中央疊加角色等素材為前提，把文字與效果放在橫式畫面的左右、直式畫面的上下，並逐行交替。背景與畫面效果仍覆蓋整個畫面（預覽會以虛線標出保留的範圍）</small></span></label>
           <label class="row center-dir" hidden>直式畫面時<select class="centerDirSel" aria-label="直式畫面的分法"><option value="tb">分成上下</option><option value="lr">分成左右</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">去除角色圖片的背景（另開頁面，日文介面）</a></p>
         <label class="row" style="gap:6px;margin-top:10px"><input id="outAudio" type="checkbox" checked> 將歌曲加入影片</label>
         <div class="rng-row"><span class="rng-lab">匯出範圍</span><select class="rngFrom" aria-label="匯出範圍的第一行"></select><span class="muted">〜</span><select class="rngTo" aria-label="匯出範圍的最後一行"></select><span class="rngInfo muted mono"></span></div>
         <div class="outbtns">

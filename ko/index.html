@@ -458,6 +458,9 @@ button.small.primary { padding: 4px 12px; }
 #app.is-mobile .transport input[type=range] { flex: 1 1 40px; min-width: 0; }
 #app.is-mobile .transport .hist-btns button { min-width: 36px; padding: 4px 8px; }
 #app.is-mobile button.play { flex: none; width: 44px; }
+.bgrm-note { margin: 6px 0 0; font-size: 12px; }
+.bgrm-note a { color: var(--cyan); }
+.bgrm-note a:hover { color: var(--text); }
 
 </style>
 </head>
@@ -657,6 +660,7 @@ button.small.primary { padding: 4px 12px; }
           </div>
           <label class="check center-free"><input id="eCenter" class="center-toggle" type="checkbox"><span>가운데 비우기(캐릭터용)<small>가운데에 캐릭터 등을 겹칠 것을 전제로, 가로 화면에서는 좌우, 세로 화면에서는 위아래에 문자와 연출을 줄마다 번갈아 배치합니다. 배경과 화면 효과는 화면 전체 그대로입니다(미리보기에는 비우는 범위를 점선으로 표시)</small></span></label>
           <label class="row center-dir" hidden>세로 화면일 때<select class="centerDirSel" aria-label="세로 화면에서 나누는 방법"><option value="tb">위아래로 나누기</option><option value="lr">좌우로 나누기</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">캐릭터 이미지 배경 투명하게 만들기(별도 페이지, 일본어)</a></p>
           <div class="rng-row"><span class="rng-lab">내보낼 범위</span><select class="rngFrom" aria-label="내보낼 범위의 첫 줄"></select><span class="muted">〜</span><select class="rngTo" aria-label="내보낼 범위의 마지막 줄"></select><span class="rngInfo muted mono"></span></div>
           <div class="outbtns"><button id="eMP4" class="primary">MP4 내보내기</button><button id="eMP4File" class="ghost mp4file" hidden title="저장할 파일을 먼저 고르고 거기에 바로 기록합니다. 긴 곡이나 1080p 이상에서 브라우저 메모리가 부족해 실패할 때 사용하세요(Chrome / Edge)">큰 동영상용(파일에 바로 저장)</button></div>
           <button class="terms-open linkish">내보낸 동영상의 권리</button>
@@ -737,6 +741,7 @@ button.small.primary { padding: 4px 12px; }
         <p class="note key-note">그린 스크린/블랙 배경에서는 단색 배경 위에 흰 글자와 연출만 그립니다. 배경 무늬, 종이 질감, 입자, 비네트는 제외됩니다. 미리보기에도 그대로 반영되며 그린은 크로마키, 블랙은 스크린 합성이나 루마 키로 다른 영상 위에 합성할 수 있습니다.</p>
         <label class="check center-free"><input id="outCenter" class="center-toggle" type="checkbox"><span>가운데 비우기(캐릭터용)<small>가운데에 캐릭터 등을 겹칠 것을 전제로, 가로 화면에서는 좌우, 세로 화면에서는 위아래에 문자와 연출을 줄마다 번갈아 배치합니다. 배경과 화면 효과는 화면 전체 그대로입니다(미리보기에는 비우는 범위를 점선으로 표시)</small></span></label>
           <label class="row center-dir" hidden>세로 화면일 때<select class="centerDirSel" aria-label="세로 화면에서 나누는 방법"><option value="tb">위아래로 나누기</option><option value="lr">좌우로 나누기</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">캐릭터 이미지 배경 투명하게 만들기(별도 페이지, 일본어)</a></p>
         <label class="row" style="gap:6px;margin-top:10px"><input id="outAudio" type="checkbox" checked> 동영상에 음원 포함</label>
         <div class="rng-row"><span class="rng-lab">내보낼 범위</span><select class="rngFrom" aria-label="내보낼 범위의 첫 줄"></select><span class="muted">〜</span><select class="rngTo" aria-label="내보낼 범위의 마지막 줄"></select><span class="rngInfo muted mono"></span></div>
         <div class="outbtns">

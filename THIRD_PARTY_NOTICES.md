@@ -47,3 +47,14 @@ Transformers.js and both Whisper models are licensed under the Apache License 2.
 - https://huggingface.co/onnx-community/whisper-base
 - https://huggingface.co/onnx-community/whisper-tiny
 - https://www.apache.org/licenses/LICENSE-2.0
+
+## BiRefNet lite / MODNet (loaded on demand)
+
+The background removal page (`bg-remove/`) loads the same Transformers.js 4.3.0 from jsDelivr and, when the user
+runs AI background removal, the `onnx-community/BiRefNet_lite` model (MIT License) or the `Xenova/modnet` model
+(Apache License 2.0) from Hugging Face. They are not bundled in this repository and are cached by the browser.
+
+- https://huggingface.co/onnx-community/BiRefNet_lite
+- https://github.com/ZhengPeng7/BiRefNet
+- https://huggingface.co/Xenova/modnet
+- https://github.com/ZHKKKe/MODNet

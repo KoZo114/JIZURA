@@ -1,6 +1,7 @@
 """Korean copy for the browser edition (same glossary keys as app/english.py). The Japanese source stays authoritative."""
 
 BODY = {
+    '<a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a>': '<a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">캐릭터 이미지 배경 투명하게 만들기(별도 페이지, 일본어)</a>',
     '文字PV系の部品を使う': '타이포그래피 부품 사용',
     'キネティックの部品を使う': '키네틱 부품 사용',
     'ホラーの演出も使う': '호러 연출도 사용',

@@ -1,6 +1,7 @@
 """English copy for the browser edition. The Japanese source stays authoritative."""
 
 BODY = {
+    '<a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a>': '<a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Remove the background from a character image (opens a separate page, in Japanese)</a>',
     '文字PV系の部品を使う': 'Use typographic parts',
     'キネティックの部品を使う': 'Use kinetic parts',
     'ホラーの演出も使う': 'Include horror effects',

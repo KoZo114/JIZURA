@@ -41,6 +41,7 @@ STYLES = {
 }
 
 BODY = {
+    '<a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a>': '<a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Hapus latar gambar karakter (halaman terpisah, berbahasa Jepang)</a>',
     '文字PV系の部品を使う': 'Pakai bagian tipografi',
     'キネティックの部品を使う': 'Pakai bagian kinetik',
     'ホラーの演出も使う': 'Sertakan efek horor',

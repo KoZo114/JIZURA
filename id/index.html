@@ -458,6 +458,9 @@ button.small.primary { padding: 4px 12px; }
 #app.is-mobile .transport input[type=range] { flex: 1 1 40px; min-width: 0; }
 #app.is-mobile .transport .hist-btns button { min-width: 36px; padding: 4px 8px; }
 #app.is-mobile button.play { flex: none; width: 44px; }
+.bgrm-note { margin: 6px 0 0; font-size: 12px; }
+.bgrm-note a { color: var(--cyan); }
+.bgrm-note a:hover { color: var(--text); }
 
 </style>
 </head>
@@ -657,6 +660,7 @@ button.small.primary { padding: 4px 12px; }
           </div>
           <label class="check center-free"><input id="eCenter" class="center-toggle" type="checkbox"><span>Kosongkan bagian tengah (untuk karakter)<small>Untuk menaruh karakter atau video lain di tengah: teks dan efeknya ditempatkan di kiri / kanan pada layar lebar dan di atas / bawah pada layar tegak, bergantian per baris. Latar dan efek layar tetap memenuhi seluruh bingkai (pratinjau menandai area kosong dengan garis putus-putus)</small></span></label>
           <label class="row center-dir" hidden>Pada layar tegak<select class="centerDirSel" aria-label="Cara membagi pada layar tegak"><option value="tb">Atas / bawah</option><option value="lr">Kiri / kanan</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Hapus latar gambar karakter (halaman terpisah, berbahasa Jepang)</a></p>
           <div class="rng-row"><span class="rng-lab">Rentang ekspor</span><select class="rngFrom" aria-label="Baris pertama rentang ekspor"></select><span class="muted">〜</span><select class="rngTo" aria-label="Baris terakhir rentang ekspor"></select><span class="rngInfo muted mono"></span></div>
           <div class="outbtns"><button id="eMP4" class="primary">Ekspor MP4</button><button id="eMP4File" class="ghost mp4file" hidden title="Pilih file tujuan dulu; video langsung ditulis ke file itu. Gunakan jika lagu panjang atau 1080p ke atas gagal karena memori browser tidak cukup (Chrome / Edge)">Untuk video besar (simpan langsung ke file)</button></div>
           <button class="terms-open linkish">Hak atas video yang diekspor</button>
@@ -737,6 +741,7 @@ button.small.primary { padding: 4px 12px; }
         <p class="note key-note">Green screen dan latar hitam hanya menampilkan teks putih dan efek di atas warna solid, tanpa pola latar, tekstur kertas, partikel, atau vignette. Pratinjau juga mengikuti pengaturan ini. Gunakan chroma key untuk green screen, atau mode campur Screen / luma key untuk latar hitam agar bisa ditumpuk di atas video lain.</p>
         <label class="check center-free"><input id="outCenter" class="center-toggle" type="checkbox"><span>Kosongkan bagian tengah (untuk karakter)<small>Untuk menaruh karakter atau video lain di tengah: teks dan efeknya ditempatkan di kiri / kanan pada layar lebar dan di atas / bawah pada layar tegak, bergantian per baris. Latar dan efek layar tetap memenuhi seluruh bingkai (pratinjau menandai area kosong dengan garis putus-putus)</small></span></label>
           <label class="row center-dir" hidden>Pada layar tegak<select class="centerDirSel" aria-label="Cara membagi pada layar tegak"><option value="tb">Atas / bawah</option><option value="lr">Kiri / kanan</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">Hapus latar gambar karakter (halaman terpisah, berbahasa Jepang)</a></p>
         <label class="row" style="gap:6px;margin-top:10px"><input id="outAudio" type="checkbox" checked> Sertakan audio dalam video</label>
         <div class="rng-row"><span class="rng-lab">Rentang ekspor</span><select class="rngFrom" aria-label="Baris pertama rentang ekspor"></select><span class="muted">〜</span><select class="rngTo" aria-label="Baris terakhir rentang ekspor"></select><span class="rngInfo muted mono"></span></div>
         <div class="outbtns">

@@ -458,6 +458,9 @@ button.small.primary { padding: 4px 12px; }
 #app.is-mobile .transport input[type=range] { flex: 1 1 40px; min-width: 0; }
 #app.is-mobile .transport .hist-btns button { min-width: 36px; padding: 4px 8px; }
 #app.is-mobile button.play { flex: none; width: 44px; }
+.bgrm-note { margin: 6px 0 0; font-size: 12px; }
+.bgrm-note a { color: var(--cyan); }
+.bgrm-note a:hover { color: var(--text); }
 
 </style>
 </head>
@@ -657,6 +660,7 @@ button.small.primary { padding: 4px 12px; }
           </div>
           <label class="check center-free"><input id="eCenter" class="center-toggle" type="checkbox"><span>留出画面中央（放角色用）<small>以在中央叠加角色等素材为前提，把文字与特效放在横屏画面的左右、竖屏画面的上下，并逐行交替。背景与画面效果仍覆盖整个画面（预览会用虚线标出留空的范围）</small></span></label>
           <label class="row center-dir" hidden>竖屏时<select class="centerDirSel" aria-label="竖屏画面的分法"><option value="tb">分成上下</option><option value="lr">分成左右</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">去除角色图片的背景（另开页面，日文界面）</a></p>
           <div class="rng-row"><span class="rng-lab">导出范围</span><select class="rngFrom" aria-label="导出范围的第一行"></select><span class="muted">～</span><select class="rngTo" aria-label="导出范围的最后一行"></select><span class="rngInfo muted mono"></span></div>
           <div class="outbtns"><button id="eMP4" class="primary">导出 MP4</button><button id="eMP4File" class="ghost mp4file" hidden title="先选择要保存的文件，直接写入该文件。长歌曲或 1080p 以上因浏览器内存不足而失败时使用（Chrome / Edge）">大型视频用（直接保存为文件）</button></div>
           <button class="terms-open linkish">关于导出视频的权利</button>
@@ -737,6 +741,7 @@ button.small.primary { padding: 4px 12px; }
         <p class="note key-note">选择绿幕／黑底时，只在纯色背景上绘制白色文字和特效（不含背景图案、纸张质感、粒子和暗角），预览也会同步显示。绿幕可用视频剪辑软件的色度键抠像，黑底可用“滤色”混合或亮度键抠像，再叠加到其他画面上。</p>
         <label class="check center-free"><input id="outCenter" class="center-toggle" type="checkbox"><span>留出画面中央（放角色用）<small>以在中央叠加角色等素材为前提，把文字与特效放在横屏画面的左右、竖屏画面的上下，并逐行交替。背景与画面效果仍覆盖整个画面（预览会用虚线标出留空的范围）</small></span></label>
           <label class="row center-dir" hidden>竖屏时<select class="centerDirSel" aria-label="竖屏画面的分法"><option value="tb">分成上下</option><option value="lr">分成左右</option></select></label>
+          <p class="bgrm-note"><a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">去除角色图片的背景（另开页面，日文界面）</a></p>
         <label class="row" style="gap:6px;margin-top:10px"><input id="outAudio" type="checkbox" checked> 在视频中包含音乐</label>
         <div class="rng-row"><span class="rng-lab">导出范围</span><select class="rngFrom" aria-label="导出范围的第一行"></select><span class="muted">～</span><select class="rngTo" aria-label="导出范围的最后一行"></select><span class="rngInfo muted mono"></span></div>
         <div class="outbtns">

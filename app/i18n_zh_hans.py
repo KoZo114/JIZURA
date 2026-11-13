@@ -40,6 +40,7 @@ STYLES = {
 }
 
 BODY = {
+    '<a class="bgrm-link" href="bg-remove/" target="_blank" rel="noopener">キャラクター画像の背景を透過する（別ページ）</a>': '<a class="bgrm-link" href="../bg-remove/" target="_blank" rel="noopener">去除角色图片的背景（另开页面，日文界面）</a>',
     '文字PV系の部品を使う': '使用文字排版部件',
     'キネティックの部品を使う': '使用动态文字部件',
     'ホラーの演出も使う': '也使用恐怖特效',
